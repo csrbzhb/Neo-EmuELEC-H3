@@ -57,3 +57,12 @@ packages/sx05re/libretro/ppsspp/*
 packages/sx05re/libretro/picodrive/*
 packages/sx05re/emulators/PPSSPPSDL/*
 packages/sysutils/busybox/*
+
+packages/sx05re/emuelec-ports/lzdoom/*
+packages/sx05re/ports/gleszdoom/*
+packages/sx05re/ports/prototype/*
+packages/sx05re/ports/quake1/*
+packages/sx05re/ports/zandronum/*
+packages/sx05re/ports/zmusic/*
+packages/sx05re/tools/video/glu2/*
+

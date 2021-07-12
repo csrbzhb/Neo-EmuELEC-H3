@@ -12,7 +12,7 @@ PKG_DEPENDS_TARGET="toolchain alsa-lib systemd dbus $OPENGLES pulseaudio"
 PKG_LONGDESC="Simple DirectMedia Layer is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware."
 
 pre_configure_target(){
-  PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=OFF \
+  PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=ON \
                          -DLIBC=ON \
                          -DGCC_ATOMICS=ON \
                          -DALTIVEC=OFF \

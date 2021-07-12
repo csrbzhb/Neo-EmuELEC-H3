@@ -170,7 +170,7 @@ elif [[ -d "/storage/roms/themes" ]]; then
         mount --bind /storage/roms/themes /emuelec/themes
 fi
 
-systemctl start smbd
+systemctl start smbdz
 
 # Set audio to alsa if we are starting retroarch or default otherwise
 [[ "$1" == "retroarch" ]] && set_audio alsa || set_audio default
