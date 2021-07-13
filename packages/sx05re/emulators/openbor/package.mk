@@ -2,12 +2,12 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="openbor"
-PKG_VERSION="2b7f9ac6cf244e9e68da5e85459e2ba9c5bcb0b9"
-PKG_SHA256="8bde7d821fc85c84200b3c61331311d5e7789e96f6ae5ce53ab05b7a5feb6031"
+PKG_VERSION="f5261e7cb97786909276c0b87f8f9f63504d2844"
+PKG_SHA256="585e57a406cb2c1f2205c1075ed046309d37c8d2e42c4ca58e9abb843be2eae5"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/DCurrent/openbor"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain SDL2-git libogg libvorbisidec libvpx libpng16"
+PKG_DEPENDS_TARGET="toolchain SDL2-git libogg libvorbisidec libvpx libpng"
 PKG_SHORTDESC="OpenBOR is the ultimate 2D side scrolling engine for beat em' ups, shooters, and more! "
 PKG_LONGDESC="OpenBOR is the ultimate 2D side scrolling engine for beat em' ups, shooters, and more! "
 PKG_TOOLCHAIN="make"
@@ -41,10 +41,6 @@ makeinstall_target() {
     cp `find . -name "OpenBOR.elf" | xargs echo` $INSTALL/usr/bin/OpenBOR
     cp $PKG_DIR/scripts/*.sh $INSTALL/usr/bin
     chmod +x $INSTALL/usr/bin/*
-    mkdir -p $INSTALL/usr/config/openbor  
-	if [ "$DEVICE" == "OdroidGoAdvance" ] || [ "$DEVICE" == "GameForce" ]; then
-		cp $PKG_DIR/config/master_odroidgoa.cfg $INSTALL/usr/config/openbor/master.cfg
-	else
-		cp $PKG_DIR/config/master.cfg $INSTALL/usr/config/openbor/master.cfg
-	fi
+    mkdir -p $INSTALL/usr/config/emuelec/configs/openbor
+	cp $PKG_DIR/config/master.cfg $INSTALL/usr/config/emuelec/configs/openbor/master.cfg
    } 

@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Nikolai Wuttke (https://github.com/lethal-guitar)
 
 PKG_NAME="rigelengine"
-PKG_VERSION="5511365e2a8ca4c9b09063f427e7bf1a66af9521"
+PKG_VERSION="2c7a4716168192d2bb5c85131e2cf232c0f5c216"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -19,6 +19,6 @@ pre_configure_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/config/emuelec/bin
-  cp ./src/RigelEngine $INSTALL/usr/config/emuelec/bin
+  mkdir -p $INSTALL/usr/bin
+  cp ./src/RigelEngine $INSTALL/usr/bin
 }

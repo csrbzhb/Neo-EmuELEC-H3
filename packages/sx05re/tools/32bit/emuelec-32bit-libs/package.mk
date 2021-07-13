@@ -2,8 +2,8 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="emuelec-32bit-libs"
-PKG_VERSION="0a66917266762e837949f9939b468f25c486bb0f"
-PKG_SHA256="26452aa02495df1cd4787a86ec916ba6d301fcc584f9007ade9c488f3a2b6955"
+PKG_VERSION="34eea148686949169e59933b3bd7271956962668"
+PKG_SHA256="e7bb643ba5311fa8a585aeec2974def00ee4a3b5d7077acc24cf6d33e6986614"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -16,12 +16,11 @@ PKG_TOOLCHAIN="manual"
 makeinstall_target() {
   mkdir -p $INSTALL
 if [[ "$DEVICE" == "OdroidGoAdvance" ]] || [[ "$DEVICE" == "GameForce" ]]; then
-	cp "$(get_build_dir mali-bifrost)/lib/arm-linux-gnueabihf/libmali-bifrost-g31-rxp0-gbm.so" $PKG_BUILD/OdroidGoAdvance/usr/config/emuelec/lib32/libmali.so
+	cp "$(get_build_dir mali-bifrost)/libmali.so_rk3326_gbm_arm32_r13p0_with_vulkan_and_cl" $PKG_BUILD/OdroidGoAdvance/usr/config/emuelec/lib32/libmali.so
 	cp -rf $PKG_BUILD/OdroidGoAdvance/* $INSTALL/
 	
 	if [[ "$DEVICE" == "GameForce" ]]; then
-	    rm $INSTALL/usr/bin/retroarch32
-	    mv $INSTALL/usr/bin/retroarch32_no_rotate $INSTALL/usr/bin/retroarch32
+	   cp -rf $PKG_BUILD/GameForce/* $INSTALL/
 	fi
 	
 elif [[ "$PROJECT" == "Amlogic-ng" ]]; then
@@ -32,4 +31,7 @@ elif [[ "$PROJECT" == "Amlogic" ]]; then
 	cp -rf $PKG_BUILD/Amlogic/* $INSTALL/
 fi
 
+mkdir -p $INSTALL/usr/lib
+ln -sf /emuelec/lib32 $INSTALL/usr/lib/arm-linux-gnueabihf
+ln -sf /emuelec/lib32/ld-2.29.so $INSTALL/usr/lib/ld-linux-armhf.so.3
 }

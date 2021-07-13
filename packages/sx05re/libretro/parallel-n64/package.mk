@@ -2,10 +2,11 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="parallel-n64"
-PKG_VERSION="dba9fc8b64351b6cf3dfb0bec2ec39f01101f48e"
-PKG_SHA256="1740a6cf3ca4c2c2a1076c55ffb513455c4c6295290bc755314e9d9d925b3f2b"
+PKG_VERSION="0a67445ce63513584d92e5c57ea87efe0da9b3bd"
+PKG_SHA256="141205571de2a5c0646ee4d33d32e71d86c8f4a75e43aba73c103c62cc15affd"
 PKG_REV="2"
 PKG_LICENSE="GPLv2"
+PKG_ARCH="arm"
 PKG_SITE="https://github.com/libretro/parallel-n64"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
@@ -23,5 +24,5 @@ PKG_MAKE_OPTS_TARGET=" platform=odroid FORCE_GLES=1 ARCH=arm"
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
-  cp parallel_n64_libretro.so $INSTALL/usr/lib/libretro/
+  cp parallel_n64_libretro.so $INSTALL/usr/lib/libretro/parallel_n64_32_libretro.so
 }

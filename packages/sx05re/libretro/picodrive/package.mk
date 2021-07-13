@@ -19,31 +19,27 @@
 ################################################################################
 
 PKG_NAME="picodrive"
-PKG_VERSION="56b24717adf4b0a43d548fad21abe3c8e1b99848"
-PKG_SHA256="775ec23ecde0a3209abe99d5970e19ac7e3b3cac7aaa94d3037e86e545699004"
+PKG_VERSION="8ee5bef7e8768d7c0b4561e131386d432f8f6e54"
 PKG_LICENSE="MAME"
 PKG_SITE="https://github.com/irixxxx/picodrive"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain $PKG_NAME:host"
-PKG_DEPENDS_HOST="cyclone68000"
-PKG_LONGDESC="Fast MegaDrive/MegaCD/32X emulator"
-PKG_TOOLCHAIN="manual"
+PKG_URL="$PKG_SITE.git"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_PRIORITY="optional"
+PKG_SECTION="libretro"
+PKG_SHORTDESC="Libretro implementation of PicoDrive. (Sega Megadrive/Genesis/Sega Master System/Sega GameGear/Sega CD/32X)"
+PKG_LONGDESC="This is yet another Megadrive / Genesis / Sega CD / Mega CD / 32X / SMS emulator, which was written having ARM-based handheld devices in mind (such as smartphones and handheld consoles like GP2X and Pandora), but also runs on non-ARM little-endian hardware too."
+GET_HANDLER_SUPPORT="git"
 PKG_BUILD_FLAGS="-gold"
-PKG_GIT_BRANCH="libretro"
+PKG_TOOLCHAIN="make"
 
-pre_build_host() {
-  cp -a $(get_build_dir cyclone68000)/* $PKG_BUILD/cpu/cyclone/
-}
-
-pre_configure_host() {
-  # fails to build in subdirs
-  cd $PKG_BUILD
-  rm -rf .$HOST_NAME
-}
-
-make_host() {
+make_target() {
   if [ "$ARCH" == "arm" ]; then
-    make -C cpu/cyclone CONFIG_FILE=../cyclone_config.h
+    make -C .. -f Makefile.libretro platform=armv6
+  elif [ "$ARCH" == "aarch64" ]; then
+  cd $PKG_BUILD
+    make -f Makefile.libretro platform=arm64
+  else
+    make -C .. -f Makefile.libretro
   fi
 }
 

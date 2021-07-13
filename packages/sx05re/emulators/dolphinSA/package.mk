@@ -2,8 +2,8 @@
 # Copyright (C) 2020-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="dolphinSA"
-PKG_VERSION="0776263c5e1f205f77c4836c1489c7200da34763"
-PKG_SHA256="87f68d53d4d84c3784ce27e8314994f1e7d7d67d0f1a663a248fbeae0e1a05ce"
+PKG_VERSION="52a388af9a92b7142972b5a37294cf926707be91"
+PKG_SHA256="82e87b7600c4632a25b5db6e65bcac787ec1929b82306ced389b8f406a328d36"
 PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/dolphin-emu/dolphin"
@@ -16,9 +16,9 @@ PKG_CMAKE_OPTS_TARGET=" -DENABLE_LTO=on -DDISTRIBUTOR='EmuELEC' -DBUILD_SHARED_L
 
 makeinstall_target() {
 export CXXFLAGS="`echo $CXXFLAGS | sed -e "s|-O.|-O2|g"`"
-mkdir -p $INSTALL/usr/config/emuelec/bin
-cp -rf $PKG_BUILD/.${TARGET_NAME}/Binaries/dolphin-emu-nogui $INSTALL/usr/config/emuelec/bin
-cp -rf $PKG_DIR/scripts/* $INSTALL/usr/config/emuelec/bin
+mkdir -p $INSTALL/usr/bin
+cp -rf $PKG_BUILD/.${TARGET_NAME}/Binaries/dolphin-emu-nogui $INSTALL/usr/bin
+cp -rf $PKG_DIR/scripts/* $INSTALL/usr/bin
 
 mkdir -p $INSTALL/usr/config/emuelec/configs/dolphin-emu
 cp -rf $PKG_BUILD/Data/Sys/* $INSTALL/usr/config/emuelec/configs/dolphin-emu

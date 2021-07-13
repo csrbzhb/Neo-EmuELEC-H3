@@ -16,9 +16,15 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 
+<<<<<<< HEAD
 PKG_EXPERIMENTAL="munt nestopiaCV quasi88 xmil np2kai hypseus scummvmsa scummvmcht flycastsa xash3D"
 PKG_EMUS="$LIBRETRO_CORES advancemame PPSSPPSDL amiberry hatarisa openbor dosbox-staging mupen64plus-nx scummvmsa stellasa solarus dosbox-pure pcsx_rearmed"
 PKG_TOOLS="emuelec-tools adlmidi"
+=======
+PKG_EXPERIMENTAL="munt nestopiaCV quasi88 xmil np2kai hypseus-singe dosbox-x"
+PKG_EMUS="$LIBRETRO_CORES advancemame PPSSPPSDL amiberry hatarisa openbor dosbox-staging mupen64plus-nx scummvmsa stellasa solarus dosbox-pure pcsx_rearmed ecwolf potator freej2me duckstation"
+PKG_TOOLS="emuelec-tools"
+>>>>>>> upstream/master
 PKG_DEPENDS_TARGET+=" $PKG_TOOLS $PKG_EMUS $PKG_EXPERIMENTAL emuelec-ports"
 
 # Removed cores for space and/or performance
@@ -30,7 +36,7 @@ PKG_DEPENDS_TARGET+=" $LIBRETRO_S922X_CORES mame2016"
 fi
 
 if [ "$DEVICE" == "OdroidGoAdvance" ] || [ "$DEVICE" == "GameForce" ]; then
-    PKG_DEPENDS_TARGET+=" kmscon odroidgoa-utils rs97-commander-sdl2"
+    PKG_DEPENDS_TARGET+=" kmscon odroidgoa-utils"
     
     #we disable some cores that are not working or work poorly on OGA
     for discore in mesen-s virtualjaguar quicknes reicastsa_old reicastsa MC; do
@@ -46,7 +52,7 @@ if [ "$ARCH" == "aarch64" ]; then
 for discore in munt_neon quicknes reicastsa_old reicastsa parallel-n64 pcsx_rearmed; do
 		PKG_DEPENDS_TARGET=$(echo $PKG_DEPENDS_TARGET | sed "s|$discore||")
 	done
-PKG_DEPENDS_TARGET+=" duckstation emuelec-32bit-libs"
+PKG_DEPENDS_TARGET+=" swanstation emuelec-32bit-libs"
 
 if [ "$PROJECT" == "Amlogic-ng" ]; then
 	PKG_DEPENDS_TARGET+=" dolphinSA"
@@ -62,14 +68,17 @@ if [ "$PROJECT" == "Amlogic-ng" ]; then
 fi
 }
 
+
 makeinstall_target() {
    
-    if [ "$PROJECT" == "Amlogic-ng" ]; then
-    mkdir -p $INSTALL/usr/config/emuelec/bin
-    cp $PKG_BUILD/fbfix/fbfix $INSTALL/usr/config/emuelec/bin
-    fi
+	mkdir -p $INSTALL/usr/bin
+	cp -rf $PKG_DIR/bin $INSTALL/usr
 
-  mkdir -p $INSTALL/usr/config/
+    if [ "$PROJECT" == "Amlogic-ng" ]; then
+    	cp $PKG_BUILD/fbfix/fbfix $INSTALL/usr/bin
+    fi
+	
+	mkdir -p $INSTALL/usr/config/
     cp -rf $PKG_DIR/config/* $INSTALL/usr/config/
     ln -sf /storage/.config/emuelec $INSTALL/emuelec
     find $INSTALL/usr/config/emuelec/ -type f -exec chmod o+x {} \;
@@ -81,11 +90,9 @@ makeinstall_target() {
         mv $INSTALL/usr/config/asound.conf-amlogic-ng $INSTALL/usr/config/asound.conf
     fi 
   
-  mkdir -p $INSTALL/usr/config/emuelec/logs
-  ln -sf /var/log $INSTALL/usr/config/emuelec/logs/var-log
+	mkdir -p $INSTALL/usr/config/emuelec/logs
+	ln -sf /var/log $INSTALL/usr/config/emuelec/logs/var-log
     
-  mkdir -p $INSTALL/usr/bin/
-  
   # leave for compatibility
   if [ "$PROJECT" == "Amlogic" ]; then
       echo "s905" > $INSTALL/ee_s905
@@ -97,13 +104,6 @@ makeinstall_target() {
       echo "$PROJECT" > $INSTALL/ee_arch
   fi
 
-  FILES=$INSTALL/usr/config/emuelec/scripts/*
-    for f in $FILES 
-    do
-    FI=$(basename $f)
-    ln -sf "/storage/.config/emuelec/scripts/$FI" $INSTALL/usr/bin/
-  done
-
   mkdir -p $INSTALL/usr/share/retroarch-overlays
     cp -r $PKG_DIR/overlay/* $INSTALL/usr/share/retroarch-overlays
   
@@ -112,9 +112,9 @@ makeinstall_target() {
     
   mkdir -p $INSTALL/usr/share/libretro-database
      touch $INSTALL/usr/share/libretro-database/dummy
-
-# Move plymouth-lite bin to show splash screen
-cp $(get_build_dir plymouth-lite)/.install_init/usr/bin/ply-image $INSTALL/usr/bin
+   
+   # Make sure all scripts and binaries are executable  
+   find $INSTALL/usr/bin -type f -exec chmod +x {} \;
 }
 
 post_install() {
@@ -151,6 +151,15 @@ cp -r $PKG_DIR/gamepads/* $INSTALL/etc/retroarch-joypad-autoconfig
   echo "chmod 4755 $INSTALL/usr/bin/busybox" >> $FAKEROOT_SCRIPT
   find $INSTALL/usr/ -type f -iname "*.sh" -exec chmod +x {} \;
   
+# Remove scripts from OdroidGoAdvance build
+if [[ ${DEVICE} == "OdroidGoAdvance" || "${DEVICE}" == "GameForce" ]]; then 
+  for i in "wifi" "sselphs_scraper" "skyscraper" "system_info"; do 
+  xmlstarlet ed -L -P -d "/gameList/game[name='${i}']" $INSTALL/usr/bin/scripts/setup/gamelist.xml
+  rm "$INSTALL/usr/bin/scripts/setup/${i}.sh"
+  done
+fi 
+
+# Remove unused cores
 CORESFILE="$INSTALL/usr/config/emulationstation/es_systems.cfg"
 
 if [ "${PROJECT}" != "Amlogic-ng" ]; then
@@ -161,21 +170,17 @@ if [ "${PROJECT}" != "Amlogic-ng" ]; then
         xmlstarlet ed -L -P -d "/systemList/system[name='saturn']" $CORESFILE
     fi
     
-    # remove unused cores
     for discore in ${remove_cores}; do
         sed -i "s|<core>$discore</core>||g" $CORESFILE
         sed -i '/^[[:space:]]*$/d' $CORESFILE
     done
 fi
 
-  # Remove scripts from OdroidGoAdvance build
-	if [[ ${DEVICE} == "OdroidGoAdvance" || "$DEVICE" == "GameForce" ]]; then 
-	for i in "01 - Get ES Themes" "03 - wifi" "10 - Force Update" "04 - Configure Reicast" "06 - Sselphs scraper" "07 - Skyscraper" "09 - system info"; do 
-	xmlstarlet ed -L -P -d "/gameList/game[name='${i}']" $INSTALL/usr/config/emuelec/scripts/modules/gamelist.xml
-	rm "$INSTALL/usr/config/emuelec/scripts/modules/${i}.sh"
-	done
-	fi 
+# Remove Retrorun For unsupported devices
+if [[ ${DEVICE} != "OdroidGoAdvance" ]] && [[ "${DEVICE}" != "GameForce" ]]; then
+	xmlstarlet ed -L -P -d "/systemList/system/emulators/emulator[@name='retrorun']" $CORESFILE
+fi
+
 #For automatic updates we use the buildate
 	date +"%m%d%Y" > $INSTALL/usr/buildate
-
 } 

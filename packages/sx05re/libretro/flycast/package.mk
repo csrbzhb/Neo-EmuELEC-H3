@@ -25,8 +25,8 @@ PKG_VERSION="0e10e86ea9ca0f8655c98909da7a845e7643b36f"
 PKG_SHA256="3a0e72a3c358520db2035c69f39fa1322ce024548dcc57afc1b2c822a47ac4a0"
 PKG_PATCH_DIRS="Amlogic"
 else
-PKG_VERSION="aba25cd17e359a79d644f54ec83d0e917d1f7ab0"
-PKG_SHA256="d6b39b71ee0a36623c106e46dd655532b05657585c03054fe7cf907ed75f3073"
+PKG_VERSION="8e4fa54e26232d6d54d3b0adca163ae7e617b9bd"
+PKG_SHA256="3341d7741ea001510ced97b49317d9617841baa78e5cba6eda0c4b6a999053f8"
 fi
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/flycast"
@@ -87,5 +87,9 @@ fi
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
-  cp flycast_libretro.so $INSTALL/usr/lib/libretro/
+  if [ "${ARCH}" == "aarch64" ]; then
+	cp flycast_libretro.so $INSTALL/usr/lib/libretro/
+  else
+	cp flycast_libretro.so $INSTALL/usr/lib/libretro/flycast_32b_libretro.so
+  fi
 }

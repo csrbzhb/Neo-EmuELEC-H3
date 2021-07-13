@@ -41,6 +41,7 @@ local.conf
 sx05re-kodi*.log
 
 packages/sx05re/experimental/
+<<<<<<< HEAD
 
 #H3 changes
 packages/linux-drivers/RTL8812AU/*
@@ -65,3 +66,6 @@ packages/sx05re/ports/zandronum/*
 packages/sx05re/ports/zmusic/*
 packages/sx05re/tools/video/glu2/*
 
+=======
+packages/sx05re/emuelec-emulationstation/api_keys.txt
+>>>>>>> upstream/master
