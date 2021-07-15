@@ -49,6 +49,7 @@ pre_configure_target(){
                          -DPTHREADS_SEM=ON \
                          -DDIRECTX=OFF \
                          -DSDL_DLOPEN=ON \
+						 -DVIDEO_OPENGL=OFF \
                          -DCLOCK_GETTIME=OFF \
                          -DRPATH=OFF \
                          -DRENDER_D3D=OFF \

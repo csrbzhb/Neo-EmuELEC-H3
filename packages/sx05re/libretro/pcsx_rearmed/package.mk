@@ -36,7 +36,7 @@ if [ "${ARCH}" == "arm" ]; then
 	if [ "${PROJECT}" == "Amlogic" ]; then
 		make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=rpi3
 	else
-		make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=rpi4
+		make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=classic_armv7_a7
 	fi
 else
 	if [ "${PROJECT}" == "Amlogic" ]; then

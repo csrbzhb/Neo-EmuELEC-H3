@@ -16,15 +16,9 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 
-<<<<<<< HEAD
-PKG_EXPERIMENTAL="munt nestopiaCV quasi88 xmil np2kai hypseus scummvmsa scummvmcht flycastsa xash3D"
+PKG_EXPERIMENTAL="munt nestopiaCV quasi88 xmil np2kai scummvmsa scummvmcht flycastsa xash3D"
 PKG_EMUS="$LIBRETRO_CORES advancemame PPSSPPSDL amiberry hatarisa openbor dosbox-staging mupen64plus-nx scummvmsa stellasa solarus dosbox-pure pcsx_rearmed"
-PKG_TOOLS="emuelec-tools adlmidi"
-=======
-PKG_EXPERIMENTAL="munt nestopiaCV quasi88 xmil np2kai hypseus-singe dosbox-x"
-PKG_EMUS="$LIBRETRO_CORES advancemame PPSSPPSDL amiberry hatarisa openbor dosbox-staging mupen64plus-nx scummvmsa stellasa solarus dosbox-pure pcsx_rearmed ecwolf potator freej2me duckstation"
 PKG_TOOLS="emuelec-tools"
->>>>>>> upstream/master
 PKG_DEPENDS_TARGET+=" $PKG_TOOLS $PKG_EMUS $PKG_EXPERIMENTAL emuelec-ports"
 
 # Removed cores for space and/or performance
@@ -83,12 +77,13 @@ makeinstall_target() {
     ln -sf /storage/.config/emuelec $INSTALL/emuelec
     find $INSTALL/usr/config/emuelec/ -type f -exec chmod o+x {} \;
     
-    if [ "$PROJECT" == "Amlogic" ]; then 
-        rm $INSTALL/usr/config/asound.conf-amlogic-ng
-    else
-        rm $INSTALL/usr/config/asound.conf
-        mv $INSTALL/usr/config/asound.conf-amlogic-ng $INSTALL/usr/config/asound.conf
-    fi 
+    #if [ "$PROJECT" == "Amlogic" ]; then 
+    #    rm $INSTALL/usr/config/asound.conf-amlogic-ng
+    #else
+    #    rm $INSTALL/usr/config/asound.conf
+        #mv $INSTALL/usr/config/asound.conf-amlogic-ng $INSTALL/usr/config/asound.conf-amlogic-ng
+        #mv $INSTALL/usr/config/asound.conf $INSTALL/usr/config/asound.conf
+    #fi 
   
 	mkdir -p $INSTALL/usr/config/emuelec/logs
 	ln -sf /var/log $INSTALL/usr/config/emuelec/logs/var-log

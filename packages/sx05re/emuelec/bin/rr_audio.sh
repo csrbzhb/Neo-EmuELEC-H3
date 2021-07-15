@@ -157,6 +157,7 @@ set_RA_audiodriver() {
 }
 # H3
 mt32_service_start() {
+			cp -f /storage/.config/asound.conf-amlogic-ng /storage/.config/asound.conf
 		if [ -d "/storage/roms/mt32" ]; then
 			if [ -f "/storage/roms/mt32/MT32_CONTROL.ROM" -a -f "/storage/roms/mt32/MT32_PCM.ROM" ]; then			
 			/usr/sbin/mt32d_armv7 -i 128 -d dmixer -f /storage/roms/mt32/ > /dev/null 2>&1 &
@@ -167,7 +168,12 @@ mt32_service_start() {
 }
 
 mt32_service_stop() {
+if /usr/bin/pgrep -n "mt32d_armv7" >/dev/null
+then
+  cp -f /storage/.config/asound.conf.org /storage/.config/asound.conf  
+fi
 /usr/bin/pkill -f mt32d_armv7 > /dev/null 2>&1 &
+
 }
 # H3 end
 case "$1" in

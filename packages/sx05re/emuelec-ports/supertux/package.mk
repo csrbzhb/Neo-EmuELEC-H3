@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="supertux"
-PKG_VERSION="182dd5f3c0a1145a37963a6c5cd63f5d0777d622"
+PKG_VERSION="ebc2053150ee3cd69a38a257d5ba31059832d19a"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
@@ -10,9 +10,9 @@ PKG_SITE="https://github.com/SuperTux/supertux"
 PKG_URL="$PKG_SITE.git"
 PKG_DEPENDS_TARGET="toolchain SDL2-git boost"
 PKG_LONGDESC="Run and jump through multiple worlds, fighting off enemies by jumping on them, bumping them from below or tossing objects at them, grabbing power-ups and other stuff on the way."
-
+GET_HANDLER_SUPPORT="git"
 pre_configure_target() {
-PKG_CMAKE_OPTS_TARGET+=" -DENABLE_OPENGL=ON -DENABLE_OPENGLES2=ON -DBUILD_DOCUMENTATION=OFF -DENABLE_DISCORD=Off -DCMAKE_BUILD_TYPE=Release -DIS_SUPERTUX_RELEASE=ON" 
+PKG_CMAKE_OPTS_TARGET+=" -DENABLE_OPENGL=ON -DENABLE_OPENGLES2=ON -DBUILD_DOCUMENTATION=OFF -DENABLE_DISCORD=Off -DCMAKE_BUILD_TYPE=Release -DIS_SUPERTUX_RELEASE=ON -DGLESV2_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include -DGLESV2_LIBRARIES=$SYSROOT_PREFIX/usr/lib/libMali.so" 
 }
 
 makeinstall_target() {

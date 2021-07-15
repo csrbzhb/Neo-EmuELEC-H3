@@ -41,22 +41,22 @@ local.conf
 sx05re-kodi*.log
 
 packages/sx05re/experimental/
-<<<<<<< HEAD
 
 #H3 changes
-packages/linux-drivers/RTL8812AU/*
-packages/linux-drivers/RTL8192DU/*
-packages/sysutils/systemd/*
-packages/tools/u-boot/*
-scripts/*
-old_packages/*
-packages/sx05re/ports/sm64ex/*
-packages/sx05re/ports/sm64ex_hires/*
-packages/linux/*
-packages/sx05re/emulators/mupen64plus-nx/*
-packages/sx05re/libretro/ppsspp/*
-packages/sx05re/libretro/picodrive/*
-packages/sx05re/emulators/PPSSPPSDL/*
+packages/linux-drivers/RTL8812AU/
+packages/linux-drivers/RTL8192DU/
+packages/sysutils/systemd/
+packages/tools/u-boot/
+scripts/
+old_packages/
+packages/sx05re/ports/sm64ex/
+packages/sx05re/ports/sm64ex_hires/
+packages/linux/
+packages/sx05re/emulators/mupen64plus-nx/
+packages/sx05re/libretro/ppsspp/
+packages/sx05re/libretro/picodrive/
+packages/sx05re/emulators/PPSSPPSDL/
+packages/sx05re/tools/sysutils/python-evdev/
 
 packages/sx05re/emuelec-ports/lzdoom/*
 packages/sx05re/ports/gleszdoom/*
@@ -65,7 +65,4 @@ packages/sx05re/ports/quake1/*
 packages/sx05re/ports/zandronum/*
 packages/sx05re/ports/zmusic/*
 packages/sx05re/tools/video/glu2/*
-
-=======
 packages/sx05re/emuelec-emulationstation/api_keys.txt
->>>>>>> upstream/master
