@@ -94,7 +94,8 @@ makeinstall_target() {
   fi
   
   
-  echo "$DEVICE" > $INSTALL/ee_arch
+  #echo "$DEVICE" > $INSTALL/ee_arch
+  echo "H3" > $INSTALL/ee_arch
   
   mkdir -p $INSTALL/usr/share/retroarch-overlays
     cp -r $PKG_DIR/overlay/* $INSTALL/usr/share/retroarch-overlays
