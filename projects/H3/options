@@ -143,5 +143,5 @@
   # additional drivers
     ADDITIONAL_DRIVERS+=" "
 
-    ADDITIONAL_PACKAGES="emuelec gpio"
+    ADDITIONAL_PACKAGES="emuelec gpio xbox360shutdown"
     WIREGUARD_SUPPORT="no"
