@@ -13,15 +13,12 @@ PKG_SECTION="virtual"
 PKG_DEPENDS_TARGET+=" ffmpeg \
                       libjpeg-turbo \
                       common-shaders \
-                      scraper \
                       Skyscraper \
-                      rs97-commander-sdl2 \
                       MC \
                       libretro-bash-launcher \
                       SDL_GameControllerDB \
                       util-linux \
                       xmlstarlet \
-                      CoreELEC-Debug-Scripts \
                       sixaxis \
                       jslisten \
                       evtest \
@@ -45,4 +42,15 @@ PKG_DEPENDS_TARGET+=" ffmpeg \
                       htop \
                       libevdev \
                       gptokeyb \
-                      exfat"
+                      exfat \
+                      351Files \
+                      box64 \
+                      pygame \
+                      iotop \
+                      usb-modeswitch \
+                      vim \
+                      rclone"
+
+if [ "${PROJECT}" == "Amlogic-ce" ]; then
+                      PKG_DEPENDS_TARGET+=" CoreELEC-Debug-Scripts"
+fi

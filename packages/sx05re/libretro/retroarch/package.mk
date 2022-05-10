@@ -19,23 +19,19 @@
 ################################################################################
 
 PKG_NAME="retroarch"
-PKG_VERSION="c226bd87f47b3fdec642216fcaf6edc651e30eb4"
+PKG_VERSION="7bdcc8bfe179aa0eee2e60858c4d5b806d34445d"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="$PKG_SITE.git"
 PKG_LICENSE="GPLv3"
-PKG_DEPENDS_TARGET="toolchain SDL2-git alsa-lib openssl freetype zlib retroarch-assets retroarch-overlays core-info ffmpeg libass joyutils empty $OPENGLES samba avahi nss-mdns freetype openal-soft libxkbcommon"
+PKG_DEPENDS_TARGET="toolchain SDL2 alsa-lib openssl freetype zlib retroarch-assets retroarch-overlays core-info ffmpeg libass joyutils empty $OPENGLES samba avahi nss-mdns freetype openal-soft"
 PKG_LONGDESC="Reference frontend for the libretro API."
 GET_HANDLER_SUPPORT="git"
 
-if [ ${PROJECT} = "Amlogic-ng" ]; then
-  PKG_PATCH_DIRS="${PROJECT}"
+if [ "${DEVICE}" = "Amlogic-ng" ] || [ "${DEVICE}" = "Amlogic" ]; then
+  PKG_PATCH_DIRS="${DEVICE}"
 fi
 
-if [ ${PROJECT} = "Amlogic" ]; then
-  PKG_PATCH_DIRS="${PROJECT}"
-fi
-
-if [ "$DEVICE" == "OdroidGoAdvance" ] || [ "$DEVICE" == "GameForce" ]; then
+if [ "$DEVICE" == "OdroidGoAdvance" ] || [ "$DEVICE" == "GameForce" ] || [ "$DEVICE" == "RK356x" ]; then
 PKG_DEPENDS_TARGET+=" libdrm librga"
 PKG_PATCH_DIRS="OdroidGoAdvance"
 fi
@@ -67,8 +63,9 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-qt \
                            --enable-sdl2 \
                            --enable-ffmpeg"
 
-if [ "$DEVICE" == "OdroidGoAdvance" ] || [ "$DEVICE" == "GameForce" ]; then
+if [ "$DEVICE" == "OdroidGoAdvance" ] || [ "$DEVICE" == "GameForce" ] || [ "$DEVICE" == "RK356x" ]; then
 PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles3 \
+                           --enable-opengles3_2 \
                            --enable-kms \
                            --disable-mali_fbdev"
 else
@@ -88,7 +85,7 @@ cd $PKG_BUILD
 }
 
 make_target() {
-  make HAVE_UPDATE_ASSETS=1 HAVE_LIBRETRODB=1 HAVE_NETWORKING=1 HAVE_LAKKA=1 HAVE_ZARCH=1 HAVE_QT=0 HAVE_LANGEXTRA=1
+  make HAVE_UPDATE_ASSETS=1 HAVE_LIBRETRODB=1 HAVE_BLUETOOTH=1 HAVE_NETWORKING=1 HAVE_LAKKA=1 HAVE_ZARCH=1 HAVE_QT=0 HAVE_LANGEXTRA=1
   [ $? -eq 0 ] && echo "(retroarch ok)" || { echo "(retroarch failed)" ; exit 1 ; }
   make -C gfx/video_filters compiler=$CC extra_flags="$CFLAGS"
 [ $? -eq 0 ] && echo "(video filters ok)" || { echo "(video filters failed)" ; exit 1 ; }
@@ -101,7 +98,10 @@ makeinstall_target() {
   mkdir -p $INSTALL/etc
     cp $PKG_BUILD/retroarch $INSTALL/usr/bin
 
+if [[ "$ARCH" == "arm" ]] && [[ "$EMUELEC_ADDON" != "Yes" ]]; then
+    #patchelf --set-interpreter /emuelec/lib32/ld-linux-armhf.so.3 $INSTALL/usr/bin/retroarch
     cp $INSTALL/usr/bin/retroarch $INSTALL/usr/bin/retroarch32
+fi
 
     cp $PKG_BUILD/retroarch.cfg $INSTALL/etc
   mkdir -p $INSTALL/usr/share/video_filters
@@ -141,8 +141,7 @@ makeinstall_target() {
   sed -i -e "s/# video_smooth = true/video_smooth = false/" $INSTALL/etc/retroarch.cfg
   sed -i -e "s/# video_aspect_ratio_auto = false/video_aspect_ratio_auto = true/" $INSTALL/etc/retroarch.cfg
   sed -i -e "s/# video_threaded = false/video_threaded = true/" $INSTALL/etc/retroarch.cfg
-  #sed -i -e "s/# video_font_path =/video_font_path =\/usr\/share\/retroarch-assets\/xmb\/monochrome\/font.ttf/" $INSTALL/etc/retroarch.cfg
-  sed -i -e "s/# video_font_path =/video_font_path =\/usr\/share\/fonts\/font.ttf/" $INSTALL/etc/retroarch.cfg
+  sed -i -e "s/# video_font_path =/video_font_path =\/usr\/share\/retroarch-assets\/xmb\/monochrome\/font.ttf/" $INSTALL/etc/retroarch.cfg
   sed -i -e "s/# video_font_size = 48/video_font_size = 32/" $INSTALL/etc/retroarch.cfg
   sed -i -e "s/# video_filter_dir =/video_filter_dir =\/usr\/share\/video_filters/" $INSTALL/etc/retroarch.cfg
   sed -i -e "s/# video_gpu_screenshot = true/video_gpu_screenshot = false/" $INSTALL/etc/retroarch.cfg
@@ -150,7 +149,6 @@ makeinstall_target() {
 
   # Audio
   sed -i -e "s/# audio_driver =/audio_driver = \"alsathread\"/" $INSTALL/etc/retroarch.cfg
-  sed -i -e "s/# audio_device =/audio_device = \"hw:0,0\"/" $INSTALL/etc/retroarch.cfg
   sed -i -e "s/# audio_filter_dir =/audio_filter_dir =\/usr\/share\/audio_filters/" $INSTALL/etc/retroarch.cfg
   if [ "$PROJECT" == "OdroidXU3" ]; then # workaround the 55fps bug
     sed -i -e "s/# audio_out_rate = 48000/audio_out_rate = 44100/" $INSTALL/etc/retroarch.cfg

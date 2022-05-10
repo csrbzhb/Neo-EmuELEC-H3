@@ -2,14 +2,13 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="PPSSPPSDL"
-PKG_VERSION="ed9c54b93a80b98789d87c7985913469533f4260"
-PKG_VERSION="087de849bdc74205dd00d8e6e11ba17a591213ab"
+PKG_VERSION="830420f0c8eafc45dab35a1028b40177fee6c029"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MAME"
 PKG_SITE="https://github.com/hrydgard/ppsspp"
 PKG_URL="https://github.com/hrydgard/ppsspp.git"
-PKG_DEPENDS_TARGET="toolchain ffmpeg libzip libpng SDL2-git zlib zip"
+PKG_DEPENDS_TARGET="toolchain ffmpeg libzip libpng SDL2 zlib zip"
 PKG_SHORTDESC="PPSSPPDL"
 PKG_LONGDESC="PPSSPP Standalone"
 GET_HANDLER_SUPPORT="git"
@@ -22,7 +21,11 @@ PKG_CMAKE_OPTS_TARGET+="-DUSE_SYSTEM_FFMPEG=ON \
                         -DUSING_X11_VULKAN=OFF \
                         -DUSE_DISCORD=OFF"
 
+if [ $ARCH == "aarch64" ]; then
+PKG_CMAKE_OPTS_TARGET+=" -DARM64=ON"
+else
 PKG_CMAKE_OPTS_TARGET+=" -DARMV7=ON"
+fi
 
 
 pre_configure_target() {

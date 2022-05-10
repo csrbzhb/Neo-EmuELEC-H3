@@ -19,14 +19,14 @@
 ################################################################################
 
 PKG_NAME="dosbox-svn"
-PKG_VERSION="09d51778a98ccb5e798b7045ddee2323f3681ef2"
+PKG_VERSION="4f2b9ca30cd9487ac8610762552c553b0c83892d"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/dosbox-svn"
 PKG_URL="$PKG_SITE.git"
 PKG_GIT_CLONE_BRANCH="libretro"
-PKG_DEPENDS_TARGET="toolchain SDL SDL_net"
+PKG_DEPENDS_TARGET="toolchain sdl12-compat SDL_net"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Upstream port of DOSBox to libretro"
@@ -38,16 +38,16 @@ PKG_BUILD_FLAGS="-lto"
 PKG_TOOLCHAIN="make"
 
 make_target() {
-  if [ "$ARCH" = "aarch64" ]; then
-    make -C libretro target=arm64 WITH_EMBEDDED_SDL=0
+  if [ "$ARCH" = "aarch64" ]; then 
+    make -C libretro target=arm64 WITH_EMBEDDED_SDL=0 WITH_FAKE_SDL=1
   elif [ "$ARCH" = "arm" ]; then
-    make -C libretro target=arm WITH_EMBEDDED_SDL=0
+    make -C libretro target=arm WITH_EMBEDDED_SDL=0 WITH_FAKE_SDL=1
   elif [ "$ARCH" = "x86_64" ]; then
     make -C libretro target=x86_64 WITH_EMBEDDED_SDL=0
   elif [ "$ARCH" = "i386" ]; then 
     make -C libretro target=x86 WITH_EMBEDDED_SDL=0
   else
-    make -C libretro WITH_EMBEDDED_SDL=0
+    make -C libretro WITH_EMBEDDED_SDL=0 WITH_FAKE_SDL=1
   fi
 }
 

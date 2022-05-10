@@ -7,11 +7,11 @@ PKG_SITE="http://www.alister.eu/jazz/oj/"
 PKG_URL="https://github.com/sana2dang/openjazz/archive/$PKG_VERSION.tar.gz"
 PKG_SHORTDESC="OpenJazz for OGA"
 PKG_LONGDESC="a free, open-source version of the classic Jazz Jackrabbit™ games."
-PKG_DEPENDS_TARGET="toolchain SDL2-git"
+PKG_DEPENDS_TARGET="toolchain SDL2"
 PKG_TOOLCHAIN="auto"
 
 pre_configure_target() {
-  sed -i "s|sdl2-config|$SYSROOT_PREFIX/usr/bin/sdl2-config|g" Makefile
+  sed -i "s|sdl2-config|${SYSROOT_PREFIX}/usr/bin/sdl2-config|g" Makefile
 }
 
 makeinstall_target() {

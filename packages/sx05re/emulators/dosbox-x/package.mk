@@ -2,12 +2,18 @@
 # Copyright (C) 2020-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="dosbox-x"
+
+if [[ "${DEVICE}" == "Amlogic" ]]; then
 PKG_VERSION="286e859e08b60a04c0b4c2bc952432122c957a9c"
 PKG_SHA256="1a44710e38b05f67e76da74f46bbea4bb8b73ed4a28044575dfa24765bc65d7c"
+else
+PKG_VERSION="314ecadb18e1646409562ec519e846a6c62b8ff2"
+PKG_SHA256="110372d89eaa6c03df83581de1619f4bcd05bab604ca76207ce05776deea9351"
+fi
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/joncampbell123/dosbox-x"
 PKG_URL="$PKG_SITE/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain linux glibc glib systemd dbus alsa-lib SDL2-git SDL2_net SDL_sound libpng zlib libvorbis flac libogg fluidsynth-git munt"
+PKG_DEPENDS_TARGET="toolchain linux glibc glib systemd dbus alsa-lib SDL2 SDL2_net SDL_sound libpng zlib libvorbis flac libogg fluidsynth-git munt"
 PKG_LONGDESC="DOSBox-X fork of the DOSBox project."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+lto"
@@ -29,6 +35,11 @@ pre_configure_target() {
 pre_make_target() {
   # Define DOSBox version
   sed -e "s/SVN/SDL2/" -i ${PKG_BUILD}/config.h
+
+if [[ "${DEVICE}" == "GameForce" ]] || [[ "${DEVICE}" == "OdroidGoAdvance" ]] ; then
+		cp $PKG_DIR/include/gpio.h ${SYSROOT_PREFIX}/usr/include/linux
+fi
+ 	
 }
 
 post_makeinstall_target() {
@@ -36,4 +47,9 @@ post_makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/emuelec/configs/dosbox-x/
   cp -a ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin/
   cp -a ${PKG_DIR}/config/*  ${INSTALL}/usr/config/emuelec/configs/dosbox-x/
+  
+if [[ "${DEVICE}" == "GameForce" ]] || [[ "${DEVICE}" == "OdroidGoAdvance" ]] ; then
+	echo ${TOOLCHAIN}/${TARGET_NAME}/sysroot/usr/include/linux/gpio.h
+	rm ${TOOLCHAIN}/${TARGET_NAME}/sysroot/usr/include/linux/gpio.h
+fi
 }

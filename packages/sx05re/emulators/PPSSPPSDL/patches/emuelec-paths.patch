@@ -1,35 +1,38 @@
 --- a/Core/System.cpp
 +++ b/Core/System.cpp
-@@ -520,11 +520,11 @@
+@@ -599,13 +599,13 @@
+ 	case DIRECTORY_PSP:
+ 		return pspDirectory;
  	case DIRECTORY_CHEATS:
- 		return g_Config.memStickDirectory + "PSP/Cheats/";
+-		return pspDirectory / "Cheats";
++		return Path("/storage/roms/savestates/PPSSPPSDL/PSP/Cheats/");
  	case DIRECTORY_GAME:
--		return g_Config.memStickDirectory + "PSP/GAME/";
-+		return (std::string) "/storage/roms/savestates/PPSSPPSDL/PSP/GAME/";
+-		return pspDirectory / "GAME";
++		return Path("/storage/roms/savestates/PPSSPPSDL/PSP/GAME/");
  	case DIRECTORY_SAVEDATA:
--		return g_Config.memStickDirectory + "PSP/SAVEDATA/";
-+		return (std::string) "/storage/roms/savestates/PPSSPPSDL/PSP/SAVEDATA";
+-		return pspDirectory / "SAVEDATA";
++		return Path("/storage/roms/savestates/PPSSPPSDL/PSP/SAVEDATA");
  	case DIRECTORY_SCREENSHOT:
--		return g_Config.memStickDirectory + "PSP/SCREENSHOT/";
-+		return (std::string) "/storage/roms/screenshots";
+-		return pspDirectory / "SCREENSHOT";
++		return Path("/storage/roms/screenshots");
  	case DIRECTORY_SYSTEM:
- 		return g_Config.memStickDirectory + "PSP/SYSTEM/";
+ 		return pspDirectory / "SYSTEM";
  	case DIRECTORY_PAUTH:
-@@ -532,7 +532,7 @@
+@@ -615,7 +615,7 @@
  	case DIRECTORY_DUMP:
- 		return g_Config.memStickDirectory + "PSP/SYSTEM/DUMP/";
+ 		return pspDirectory / "SYSTEM/DUMP";
  	case DIRECTORY_SAVESTATE:
--		return g_Config.memStickDirectory + "PSP/PPSSPP_STATE/";
-+		return (std::string) "/storage/roms/savestates/PPSSPPSDL/PSP/PPSSPP_STATE/";
+-		return pspDirectory / "PPSSPP_STATE";
++		return Path("/storage/roms/savestates/PPSSPPSDL/PSP/PPSSPP_STATE/");
  	case DIRECTORY_CACHE:
- 		return g_Config.memStickDirectory + "PSP/SYSTEM/CACHE/";
+ 		return pspDirectory / "SYSTEM/CACHE";
  	case DIRECTORY_TEXTURES:
-@@ -545,7 +545,7 @@
+@@ -630,7 +630,7 @@
  	case DIRECTORY_VIDEO:
- 		return g_Config.memStickDirectory + "PSP/VIDEO/";
+ 		return pspDirectory / "VIDEO";
  	case DIRECTORY_AUDIO:
--		return g_Config.memStickDirectory + "PSP/AUDIO/";
-+		return (std::string) "/storage/roms/savestates/PPSSPPSDL/PSP/AUDIO/";
- 	// Just return the memory stick root if we run into some sort of problem.
- 	default:
- 		ERROR_LOG(FILESYS, "Unknown directory type.");
+-		return pspDirectory / "AUDIO";
++		return Path("/storage/roms/savestates/PPSSPPSDL/PSP/AUDIO/");
+ 	case DIRECTORY_CUSTOM_SHADERS:
+ 		return pspDirectory / "shaders";
+ 

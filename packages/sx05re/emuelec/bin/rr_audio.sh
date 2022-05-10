@@ -19,20 +19,6 @@ pulseaudio_sink_load() {
 
   if [ ${RR_AUDIO_BACKEND} = "PulseAudio" ];then
   systemctl restart pulseaudio 
-  
-	EE_DEVICE=$(cat /ee_arch)
-	if [ "$EE_DEVICE" == "H3" ]; then
-        pactl load-module module-alsa-sink device="dmixer" name="temp_sink" tsched=0 > /dev/null
-        pactl set-sink-volume alsa_output.temp_sink ${RR_AUDIO_VOLUME}%	
-        if [ ! -z "$(pactl list modules short | grep module-alsa-sink)" ];then
-          echo "Set-Audio: PulseAudio module-alsa-sink loaded, setting a volume of "${RR_AUDIO_VOLUME}"%"
-          echo "Set-Audio: PulseAudio will use sink "$(pactl list sinks short)
-        else
-          echo "Set-Audio: PulseAudio module-alsa-sink failed to load"
-        fi
-		
-	fi
-	if [ "$EE_DEVICE" != "H3" ]; then
     if [ "${RR_PA_TSCHED}" = "false" ]; then
       TSCHED="tsched=0"
       echo "Set-Audio: PulseAudio will disable timer-based audio scheduling"
@@ -62,14 +48,12 @@ pulseaudio_sink_load() {
         fi
       fi
     fi
-	fi
   fi
 }
 
 # Unload PulseAudio sink
 pulseaudio_sink_unload() {
-  PULSE_STATUS=$(systemctl show -p SubState --value pulseaudio)
-  if [ ${PULSE_STATUS} = "running" ]; then
+  
   if [ ${RR_AUDIO_BACKEND} = "PulseAudio" ]; then
     if [ "${RR_PA_UDEV}" = "true" ] && [ ! -z "$(pactl list modules short | grep module-alsa-card)" ]; then
       pactl set-sink-volume "$(pactl info | grep 'Default Sink:' | cut -d ' ' -f 3)" 100%  
@@ -93,8 +77,7 @@ pulseaudio_sink_unload() {
       echo "Set-Audio: ALSA mixer restore volume to 100%"
     fi
   fi
-  systemctl stop pulseaudio
-  fi
+  systemctl stop pulseaudio 
 }
 
 # Start FluidSynth
@@ -155,59 +138,22 @@ set_RA_audiodriver() {
     fi
   fi
 }
-# H3
-mt32_service_start() {
-			cp -f /storage/.config/asound.conf-amlogic-ng /storage/.config/asound.conf
-		if [ -d "/storage/roms/mt32" ]; then
-			if [ -f "/storage/roms/mt32/MT32_CONTROL.ROM" -a -f "/storage/roms/mt32/MT32_PCM.ROM" ]; then			
-			/usr/sbin/mt32d_armv7 -i 128 -d dmixer -f /storage/roms/mt32/ > /dev/null 2>&1 &
-			elif [ -f "/storage/roms/mt32/CM32L_CONTROL.ROM" -a -f "/storage/roms/mt32/CM32L_PCM.ROM" ]; then			
-			/usr/sbin/mt32d_armv7 -i 128 -d dmixer -f /storage/roms/mt32/ > /dev/null 2>&1 &			
-			fi
-		fi
-}
 
-mt32_service_stop() {
-if /usr/bin/pgrep -n "mt32d_armv7" >/dev/null
-then
-  cp -f /storage/.config/asound.conf.org /storage/.config/asound.conf  
-fi
-/usr/bin/pkill -f mt32d_armv7 > /dev/null 2>&1 &
-
-}
-# H3 end
 case "$1" in
 	"pulseaudio")
 		pulseaudio_sink_unload
 		fluidsynth_service_stop
 		pulseaudio_sink_load
-		mt32_service_stop
 	;;
 	"fluidsynth")
 		pulseaudio_sink_unload
 		pulseaudio_sink_load
 		fluidsynth_service_stop
 		fluidsynth_service_start
-		mt32_service_stop
-	;;
-	"fluidsynth_mt32")
-		pulseaudio_sink_unload
-		pulseaudio_sink_load
-		fluidsynth_service_stop
-		fluidsynth_service_start
-		mt32_service_stop
-		mt32_service_start
-	;;
-	"mt32")
-		pulseaudio_sink_unload
-		fluidsynth_service_stop
-		mt32_service_stop
-		mt32_service_start
 	;;
 	"alsa")
 		pulseaudio_sink_unload
 		fluidsynth_service_stop
-		mt32_service_stop
 		RR_AUDIO_BACKEND="alsa"
 	;;
 esac

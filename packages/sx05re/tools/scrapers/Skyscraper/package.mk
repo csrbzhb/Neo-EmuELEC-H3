@@ -2,7 +2,7 @@
 # Copyright (C) 2018-present CoreELEC (https://coreelec.org)
 
 PKG_NAME="Skyscraper"
-PKG_VERSION="c4fe620784a0e36dfe5a96ff15df246c0d3e837a"
+PKG_VERSION="b876cf79ab5e447c37be9b594efb24578790ec8a"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
@@ -27,7 +27,7 @@ configure_target() {
   sed -e "s#resexamples.path=/usr/local/etc/skyscraper/resources#resexamples.path=$INSTALL/usr/share/skyscraper/resources#" -i ${PKG_BUILD}/skyscraper.pro
 
   rm -rf .qmake.stash
-  QMAKEPATH=$(find $BUILD/qt-everywhere*/qtbase/bin -maxdepth 1 -name qmake)
+  QMAKEPATH="$(get_build_dir qt-everywhere)/qtbase/bin/qmake"
   $QMAKEPATH $PKG_BUILD/skyscraper.pro
 }
 

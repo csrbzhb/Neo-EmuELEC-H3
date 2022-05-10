@@ -2,8 +2,8 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="mame2003-xtreme"
-PKG_VERSION="6ecb94c2da04bea1d58757d618b1d9b1f29bddc1"
-PKG_SHA256="714b2504d36d3f7e6696e68337222d81aaf58fe99e74c9af9bd0a0f22accc384"
+PKG_VERSION="85d77030d43f1122c7b644ecec7b65e0b85b8e4a"
+PKG_SHA256="9dc576aff1e027bdfba8a1b4912e312cf812f37d71342fa7bc2c7f8dd5a73066"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MAME"
@@ -17,7 +17,7 @@ pre_configure_target() {
   cd ${PKG_BUILD}
   export SYSROOT_PREFIX=${SYSROOT_PREFIX}
 
-  case ${PROJECT} in
+  case ${DEVICE} in
     Amlogic-ng)
         PKG_MAKE_OPTS_TARGET+=" platform=AMLG12B"
       ;;

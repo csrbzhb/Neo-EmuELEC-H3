@@ -19,8 +19,8 @@
 ################################################################################
 
 PKG_NAME="gme"
-PKG_VERSION="f8debd1469dc8b61bc0160297886dbc3132205ea"
-PKG_SHA256="0379e78efee153ad5fb9694ac7578bfab180612a4ef45892e42f1f6b68274dd9"
+PKG_VERSION="5fb30ebb8871624cecc07813212fb643fa8449f4"
+PKG_SHA256="ea4394c28fd63b3b1f8ca2e7aa83ad4a14fb360815e4d593065466712769550a"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"

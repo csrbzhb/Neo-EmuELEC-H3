@@ -2,11 +2,11 @@
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="supermariowar"
-PKG_VERSION="17b5edf165cb964ef245e57fe5b59451e683c569"
+PKG_VERSION="40fee3201e90a81fe5c8e49a92d305aa559e93cc"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/mmatyas/supermariowar"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain SDL2-git SDL2_image SDL2_mixer"
+PKG_DEPENDS_TARGET="toolchain SDL2 SDL2_image SDL2_mixer"
 PKG_SHORTDESC="A fan-made multiplayer Super Mario Bros. style deathmatch game "
 PKG_TOOLCHAIN="cmake"
 

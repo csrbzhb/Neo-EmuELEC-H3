@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="mrboom"
-PKG_VERSION="553075dcbdfede35f508480c0f9abba1709d13fb"
+PKG_VERSION="64e874abdd11b845c013ea74e5a62ed1e12d09e2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"

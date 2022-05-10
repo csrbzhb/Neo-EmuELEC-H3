@@ -19,8 +19,8 @@
 ################################################################################
 
 PKG_NAME="desmume-2015"
-PKG_VERSION="b6de1b650d047a43f78b1ae561d379100e22814f"
-PKG_SHA256="5f26affee913afc8b5a59c051f2e3417e4f74bbc0cd8877c835bed659c29e8d0"
+PKG_VERSION="af397ff3d1f208c27f3922cc8f2b8e08884ba893"
+PKG_SHA256="de35962a758dfee9c82c7a2055c62a80a539d602fd4db20bdce6b0619f5e34dd"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"

@@ -2,8 +2,8 @@
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="pcsx_rearmed"
-PKG_VERSION="cf71346b180ca485e67a43fc199232c51be9459b"
-PKG_SHA256="fcffe92f60a111763416b47de642c2acabb91ffe696da96afe67b0a5a5c2f228"
+PKG_VERSION="e24732050e902bd5402b2b7da7c391d2ca8fa799"
+PKG_SHA256="96b933eb2877ff224b3b00af0e9f4f3560d3d0b1c0bb18f67060e7e5598c1757"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -11,43 +11,13 @@ PKG_SITE="https://github.com/libretro/pcsx_rearmed"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain alsa"
 PKG_SHORTDESC="ARM optimized PCSX fork"
-PKG_LONGDESC="PCSX ReARMed is yet another PCSX fork based on the PCSX-Reloaded project, which itself contains code from PCSX, PCSX-df and PCSX-Revolution."
-PKG_IS_ADDON="no"
 PKG_TOOLCHAIN="make"
-PKG_AUTORECONF="no"
-PKG_BUILD_FLAGS="-gold"
-
-PKG_MAKE_OPTS_TARGET="-f Makefile.libretro GIT_VERSION=${PKG_VERSION:0:7}"
-
-pre_configure_target() {
- cd ${PKG_BUILD}
-  if [ "${PROJECT}" = "Amlogic-ng" ]; then
-    PKG_MAKE_OPTS_TARGET+=" platform=rpi4"
-  elif [ "${PROJECT}" = "Amlogic" ]; then
-    PKG_MAKE_OPTS_TARGET+=" platform=rpi3"
-  else
-    PKG_MAKE_OPTS_TARGET+=" platform=classic_armv7_a7"
-  fi
-}
+PKG_BUILD_FLAGS="+speed -gold"
 
 make_target() {
 cd ${PKG_BUILD}
-if [ "${ARCH}" == "arm" ]; then
-	if [ "${PROJECT}" == "Amlogic" ]; then
-		make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=rpi3
-	else
-		make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=classic_armv7_a7
-	fi
-else
-	if [ "${PROJECT}" == "Amlogic" ]; then
-		make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=h5
-	elif [ "${DEVICE}" == "OdroidGoAdvance" ] || [ "${DEVICE}" == "Gameforce" ]; then
-		sed -i "s|cortex-a53|cortex-a35|g" Makefile.libretro
-		make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=h5
-	else
-		make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=CortexA73_G12B
-	fi
-fi
+export ALLOW_LIGHTREC_ON_ARM=1
+make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=classic_armv7_a7
 }
 
 makeinstall_target() {
@@ -56,6 +26,7 @@ mkdir -p ${INSTALL}${INSTALLTO}/
 
 if [ "${ARCH}" == "arm" ]; then
     cp pcsx_rearmed_libretro.so ${INSTALL}${INSTALLTO}/pcsx_rearmed_32b_libretro.so
+	cp pcsx_rearmed_libretro.so ${INSTALL}${INSTALLTO}/pcsx_rearmed_libretro.so
 else
     cp pcsx_rearmed_libretro.so ${INSTALL}${INSTALLTO}
 fi

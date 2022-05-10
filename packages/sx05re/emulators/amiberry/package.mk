@@ -6,17 +6,17 @@ PKG_VERSION="d4176b4a2627fb0e9cbcb26f7c6665d95e1d3303"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/midwan/amiberry"
 PKG_URL="https://github.com/midwan/amiberry.git"
-PKG_DEPENDS_TARGET="toolchain linux glibc bzip2 zlib SDL2-git SDL2_image SDL2_ttf capsimg freetype libxml2 flac libogg mpg123-compat libpng libmpeg2"
+PKG_DEPENDS_TARGET="toolchain linux glibc bzip2 zlib SDL2 SDL2_image SDL2_ttf capsimg freetype libxml2 flac libogg mpg123-compat libpng libmpeg2"
 PKG_LONGDESC="Amiberry is an optimized Amiga emulator for ARM-based boards."
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="make"
-PKG_GIT_CLONE_BRANCH="master"
+PKG_EE_UPDATE=no
 
 pre_configure_target() {
   cd ${PKG_BUILD}
   export SYSROOT_PREFIX=${SYSROOT_PREFIX}
 
-  case ${PROJECT} in
+  case ${DEVICE} in
     Amlogic)
      if [ $ARCH == "arm" ]; then
         AMIBERRY_PLATFORM="AMLGX"
@@ -31,9 +31,6 @@ pre_configure_target() {
          AMIBERRY_PLATFORM="n2"
      fi
       ;;
-    H3)
-        AMIBERRY_PLATFORM="orangepi-pc"
-      ;;
   esac
  
 if [ "$DEVICE" == "OdroidGoAdvance" ] || [ "$DEVICE" == "GameForce" ]; then
@@ -44,6 +41,12 @@ AMIBERRY_PLATFORM="go-advance"
 fi
 
 fi
+
+if [ "$DEVICE" == "RK356x" ]; then
+	AMIBERRY_PLATFORM="a64"
+fi
+
+AMIBERRY_PLATFORM="orangepi-pc"
 
 sed -i "s|AS     = as|AS     \?= as|" Makefile
 PKG_MAKE_OPTS_TARGET+=" all PLATFORM=${AMIBERRY_PLATFORM} SDL_CONFIG=${SYSROOT_PREFIX}/usr/bin/sdl2-config"

@@ -19,11 +19,11 @@
 ################################################################################
 
 PKG_NAME="ppsspp"
-PKG_VERSION="6ca01d5882a1517b941d7d6ff80a37b64c372e92"
+PKG_VERSION="830420f0c8eafc45dab35a1028b40177fee6c029"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/hrydgard/ppsspp"
 PKG_URL="https://github.com/hrydgard/ppsspp.git"
-PKG_DEPENDS_TARGET="toolchain SDL2-git ffmpeg"
+PKG_DEPENDS_TARGET="toolchain SDL2 ffmpeg"
 PKG_LONGDESC="A PSP emulator for Android, Windows, Mac, Linux and Blackberry 10, written in C++."
 GET_HANDLER_SUPPORT="git"
 
@@ -46,6 +46,13 @@ pre_configure_target() {
                              -DUSING_EGL=ON \
                              -DUSING_GLES2=ON"
   fi
+  
+if [ $ARCH == "aarch64" ]; then
+PKG_CMAKE_OPTS_TARGET+=" -DARM64=ON"
+else
+PKG_CMAKE_OPTS_TARGET+=" -DARMV7=ON"
+fi
+  
 }
 
 pre_make_target() {

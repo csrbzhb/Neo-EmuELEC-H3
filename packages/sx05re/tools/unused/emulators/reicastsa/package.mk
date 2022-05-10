@@ -2,7 +2,7 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="reicastsa"
-if [ "${PROJECT}" == "Amlogic-ng" ]; then
+if [ "${DEVICE}" == "Amlogic-ng" ]; then
 PKG_VERSION="7e11e7aff6d704de4ad8ad7531f597df058099ac"
 PKG_SHA256="07978933e040470b1fbb8c887485703f10fb828b583b350e23e834e7b8cee4bc"
 else
@@ -24,7 +24,7 @@ PKG_PATCH_DIRS="${PROJECT}"
 
 make_target() {
   cd shell/linux
-  make CC=$CC CXX=$CXX AS=$CC STRIP=$STRIP EXTRAFLAGS="-I$PKG_BUILD/shell/linux-deps/include" platform=h3 reicast.elf
+  make CC=$CC CXX=$CXX AS=$CC STRIP=$STRIP EXTRAFLAGS="-I$PKG_BUILD/shell/linux-deps/include" platform=odroidc2 reicast.elf
 }
 
 makeinstall_target() {

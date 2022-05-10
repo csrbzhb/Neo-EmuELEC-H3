@@ -232,5 +232,5 @@ fi
 # Return to default mode
 ${TBASH} /usr/bin/setres.sh
 
-# reset audio to pulseaudio
-set_audio pulseaudio
+# reset audio to default
+set_audio default

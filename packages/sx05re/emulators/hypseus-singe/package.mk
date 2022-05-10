@@ -2,13 +2,13 @@
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="hypseus-singe"
-PKG_VERSION="2fffa379b2e4d342605b171bbeb784496026756e"
+PKG_VERSION="9e1a47c45bf0bc06d232fbac6d65e7b39f4f9d18"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL3"
 PKG_SITE="https://github.com/DirtBagXon/hypseus-singe"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain SDL2-git libvorbis"
+PKG_DEPENDS_TARGET="toolchain SDL2 libvorbis"
 PKG_LONGDESC="Hypseus is a fork of Daphne. A program that lets one play the original versions of many laserdisc arcade games on one's PC."
 PKG_TOOLCHAIN="cmake"
 GET_HANDLER_SUPPORT="git"

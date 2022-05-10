@@ -15,17 +15,18 @@ PKG_LONGDESC="EmuELEC Meta Package"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
+#PKG_NEED_UNPACK="$(get_pkg_directory busybox)"
 
-PKG_EXPERIMENTAL="munt nestopiaCV quasi88 xmil np2kai scummvmsa scummvmcht flycastsa xash3D"
-PKG_EMUS="$LIBRETRO_CORES advancemame PPSSPPSDL amiberry hatarisa openbor dosbox-staging mupen64plus-nx scummvmsa stellasa solarus dosbox-pure pcsx_rearmed"
+PKG_EXPERIMENTAL="munt nestopiaCV quasi88 xmil np2kai hypseus-singe fbneoSA"
+PKG_EMUS="$LIBRETRO_CORES advancemame PPSSPPSDL amiberry hatarisa openbor dosbox-staging mupen64plus-nx mupen64plus-nx-alt scummvmsa stellasa solarus dosbox-pure pcsx_rearmed ecwolf potator freej2me duckstation flycastsa fmsx-libretro jzintv mupen64plussa"
 PKG_TOOLS="emuelec-tools"
 PKG_DEPENDS_TARGET+=" $PKG_TOOLS $PKG_EMUS $PKG_EXPERIMENTAL emuelec-ports"
 
 # Removed cores for space and/or performance
-# PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mame2015 fba4arm reicastsa reicastsa_old mba.mini.plus $LIBRETRO_EXTRA_CORES xow"
+# PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mame2015 fba4arm mba.mini.plus $LIBRETRO_EXTRA_CORES xow"
 
 # These packages are only meant for S922x, S905x2 and A311D devices as they run poorly on S905" 
-if [ "$PROJECT" == "Amlogic-ng" ]; then
+if [ "${DEVICE}" == "Amlogic-ng" ] || [ "$DEVICE" == "RK356x" ]; then
 PKG_DEPENDS_TARGET+=" $LIBRETRO_S922X_CORES mame2016"
 fi
 
@@ -33,8 +34,8 @@ if [ "$DEVICE" == "OdroidGoAdvance" ] || [ "$DEVICE" == "GameForce" ]; then
     PKG_DEPENDS_TARGET+=" kmscon odroidgoa-utils"
     
     #we disable some cores that are not working or work poorly on OGA
-    for discore in mesen-s virtualjaguar quicknes reicastsa_old reicastsa MC; do
-        PKG_DEPENDS_TARGET=$(echo $PKG_DEPENDS_TARGET | sed "s|$discore||")
+    for discore in duckstation mesen-s virtualjaguar quicknes MC; do
+         PKG_DEPENDS_TARGET=$(echo $PKG_DEPENDS_TARGET | sed "s|$discore | |")
     done
     PKG_DEPENDS_TARGET+=" yabasanshiro"
 else
@@ -43,19 +44,21 @@ fi
 
 # These cores do not work, or are not needed on aarch64, this package needs cleanup :) 
 if [ "$ARCH" == "aarch64" ]; then
-for discore in munt_neon quicknes reicastsa_old reicastsa parallel-n64 pcsx_rearmed; do
-		PKG_DEPENDS_TARGET=$(echo $PKG_DEPENDS_TARGET | sed "s|$discore||")
+for discore in munt_neon quicknes parallel-n64 pcsx_rearmed; do
+		PKG_DEPENDS_TARGET=$(echo $PKG_DEPENDS_TARGET | sed "s|$discore| |")
 	done
-PKG_DEPENDS_TARGET+=" swanstation emuelec-32bit-libs"
+	
+#PKG_DEPENDS_TARGET+=" swanstation emuelec-32bit-libs"
+PKG_DEPENDS_TARGET+=" swanstation "
 
-if [ "$PROJECT" == "Amlogic-ng" ]; then
+if [ "${DEVICE}" == "Amlogic-ng" ] || [ "$DEVICE" == "RK356x" ]; then
 	PKG_DEPENDS_TARGET+=" dolphinSA"
 fi
 
 fi
 
 make_target() {
-if [ "$PROJECT" == "Amlogic-ng" ]; then
+if [ "${DEVICE}" == "Amlogic-ng" ]; then
     cp -r $PKG_DIR/fbfix* $PKG_BUILD/
     cd $PKG_BUILD/fbfix
     $CC -O2 fbfix.c -o fbfix
@@ -68,37 +71,31 @@ makeinstall_target() {
 	mkdir -p $INSTALL/usr/bin
 	cp -rf $PKG_DIR/bin $INSTALL/usr
 
-    if [ "$PROJECT" == "Amlogic-ng" ]; then
+    if [ "${DEVICE}" == "Amlogic-ng" ]; then
     	cp $PKG_BUILD/fbfix/fbfix $INSTALL/usr/bin
     fi
 	
 	mkdir -p $INSTALL/usr/config/
     cp -rf $PKG_DIR/config/* $INSTALL/usr/config/
     ln -sf /storage/.config/emuelec $INSTALL/emuelec
+    
+    # Added for compatibility with portmaster
+    ln -sf /storage/roms $INSTALL/roms
+    ln -sf /storage/roms/ports/portmaster $INSTALL/portmaster
+    
     find $INSTALL/usr/config/emuelec/ -type f -exec chmod o+x {} \;
     
-    #if [ "$PROJECT" == "Amlogic" ]; then 
-    #    rm $INSTALL/usr/config/asound.conf-amlogic-ng
-    #else
-    #    rm $INSTALL/usr/config/asound.conf
-        #mv $INSTALL/usr/config/asound.conf-amlogic-ng $INSTALL/usr/config/asound.conf-amlogic-ng
-        #mv $INSTALL/usr/config/asound.conf $INSTALL/usr/config/asound.conf
-    #fi 
-  
 	mkdir -p $INSTALL/usr/config/emuelec/logs
 	ln -sf /var/log $INSTALL/usr/config/emuelec/logs/var-log
     
   # leave for compatibility
-  if [ "$PROJECT" == "Amlogic" ]; then
+  if [ "${DEVICE}" == "Amlogic" ]; then
       echo "s905" > $INSTALL/ee_s905
   fi
   
-  if [ "$DEVICE" == "OdroidGoAdvance" ] || [ "$DEVICE" == "GameForce" ]; then
-      echo "$DEVICE" > $INSTALL/ee_arch
-  else
-      echo "$PROJECT" > $INSTALL/ee_arch
-  fi
-
+  
+  echo "$DEVICE" > $INSTALL/ee_arch
+  
   mkdir -p $INSTALL/usr/share/retroarch-overlays
     cp -r $PKG_DIR/overlay/* $INSTALL/usr/share/retroarch-overlays
   
@@ -113,15 +110,6 @@ makeinstall_target() {
 }
 
 post_install() {
-# Remove unnecesary Retroarch Assets and overlays
-  for i in branding glui nuklear nxrgui pkg/wiiu switch wallpapers zarch COPYING; do
-    rm -rf "$INSTALL/usr/share/retroarch-assets/$i"
-  done
-  
-  for i in automatic dot-art flatui neoactive pixel retroactive retrosystem systematic convert.sh NPMApng2PMApng.py; do
-  rm -rf "$INSTALL/usr/share/retroarch-assets/xmb/$i"
-  done
-  
   for i in borders effects gamepads ipad keyboards misc; do
     rm -rf "$INSTALL/usr/share/retroarch-overlays/$i"
   done
@@ -153,28 +141,6 @@ if [[ ${DEVICE} == "OdroidGoAdvance" || "${DEVICE}" == "GameForce" ]]; then
   rm "$INSTALL/usr/bin/scripts/setup/${i}.sh"
   done
 fi 
-
-# Remove unused cores
-CORESFILE="$INSTALL/usr/config/emulationstation/es_systems.cfg"
-
-if [ "${PROJECT}" != "Amlogic-ng" ]; then
-    if [[ ${DEVICE} == "OdroidGoAdvance" || "$DEVICE" == "GameForce" ]]; then
-        remove_cores="mesen-s quicknes REICASTSA_OLD REICASTSA mame2016 mesen"
-    elif [ "${PROJECT}" == "Amlogic" ]; then
-        remove_cores="mesen-s quicknes mame2016 mesen"
-        xmlstarlet ed -L -P -d "/systemList/system[name='saturn']" $CORESFILE
-    fi
-    
-    for discore in ${remove_cores}; do
-        sed -i "s|<core>$discore</core>||g" $CORESFILE
-        sed -i '/^[[:space:]]*$/d' $CORESFILE
-    done
-fi
-
-# Remove Retrorun For unsupported devices
-if [[ ${DEVICE} != "OdroidGoAdvance" ]] && [[ "${DEVICE}" != "GameForce" ]]; then
-	xmlstarlet ed -L -P -d "/systemList/system/emulators/emulator[@name='retrorun']" $CORESFILE
-fi
 
 #For automatic updates we use the buildate
 	date +"%m%d%Y" > $INSTALL/usr/buildate

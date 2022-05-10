@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <gameList>
 	<game>
-		<path>./file_manager_(kb).sh</path>
+		<path>./file_manager.sh</path>
 		<name>File Manager</name>
-		<desc>MC File Manager. A keyboard is required!</desc>
+		<desc>MC File Manager. NO keyboard required</desc>
 		<developer>shantigilbert </developer>
 		<publisher>Emuelec</publisher>
 		<genre>script</genre>
@@ -26,6 +26,15 @@
 		<publisher>Emuelec</publisher>
 		<genre>script</genre>
 		<image>./downloaded_images/drastic.png</image>
+	</game>
+	<game>
+		<path>./install_pixelcade.sh</path>
+		<name>Install Pixelcade</name>
+		<desc>Download and install software for Pixelcade - LED Marquee for Arcade Machines!</desc>
+		<developer>pixelcade</developer>
+		<publisher>pixelcade.org</publisher>
+		<genre>script</genre>
+		<image>./downloaded_images/pixelcade.png</image>
 	</game>
 	<game>
 		<path>./sselphs_scraper.sh</path>
@@ -90,15 +99,6 @@
 		<genre>script</genre>
 		<image>./downloaded_images/terminal.png</image>
 	</game>
-		<game>
-		<path>./Enable_Disable_GPIO.sh</path>
-		<name>99 - Enable_Disable GPIO.</name>
-		<desc>Start gpio service or stop gpio service</desc>
-		<developer>Matthew Wang </developer>
-		<publisher>Neo-Emuelec-H3</publisher>
-		<genre>script</genre>
-		<image>./downloaded_images/gpio.png</image>
-		</game>
 	<game>
 		<path>./youtube_search.sh</path>
 		<name>YouTube Search</name>
@@ -107,15 +107,6 @@
 		<publisher>Emuelec</publisher>
 		<genre>script</genre>
 		<image>./downloaded_images/youtube.png</image>
-	</game>
-	<game>
-		<path>./bt_controller_management.sh</path>
-		<name>Bluetooth controller management</name>
-		<desc>Alternative Bluetooth configuration menu</desc>
-		<developer>shantigilbert </developer>
-		<publisher>Emuelec</publisher>
-		<genre>script</genre>
-		<image>./downloaded_images/bluetooth.png</image>
 	</game>
 	<game>
 		<path>./scan_scummVM_games.sh</path>

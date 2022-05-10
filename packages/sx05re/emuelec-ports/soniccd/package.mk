@@ -2,13 +2,14 @@
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="soniccd"
-PKG_VERSION="dfe9dc74b02a8eea85871f6b8a9667d0eaf2dcf4"
+PKG_VERSION="a5e1f2a354b5536537d491c98d3ac882e2210d1e"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/Rubberduckycooly/Sonic-CD-11-Decompilation"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain SDL2-git libtheora"
+PKG_DEPENDS_TARGET="toolchain SDL2 libtheora"
 PKG_SHORTDESC="A Full Decompilation of Sonic CD 2011"
 PKG_TOOLCHAIN="make"
+PKG_EE_UPDATE="no"
 
 pre_configure_target() {
 # Add missing -lstdc++fs

@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="gearsystem"
-PKG_VERSION="518651a63c54a1eebbb33fbfd98b36bf4cee976e"
+PKG_VERSION="a6849bfa6973af6417678d9b1ea893064aa3910c"
 PKG_SHA256=""
 PKG_REV="1"
 PKG_ARCH="any"
@@ -34,15 +34,8 @@ PKG_LONGDESC="Gearsystem is a Sega Master System / Game Gear / SG-1000 emulator 
 PKG_TOOLCHAIN="make"
 GET_HANDLER_SUPPORT="git"
 
-pre_make_target() {
-sed -i "s|-O3|-O2|g" $PKG_BUILD/platforms/libretro/Makefile
-#sed -i "s|-DGEARSYSTEM_DISABLE_DISASSEMBLER| |g" $PKG_BUILD/platforms/libretro/Makefile
-}
-
-
 make_target() {
-
-  make platform="classic_armv7_a7" -C platforms/libretro/ -f Makefile 
+  make -C platforms/libretro/
 }
 
 

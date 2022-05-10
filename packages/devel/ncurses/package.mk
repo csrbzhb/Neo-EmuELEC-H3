@@ -25,7 +25,7 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --with-normal \
                            --without-debug \
                            --without-profile \
-                           --without-termlib \
+                           --with-termlib \
                            --without-ticlib \
                            --without-gpm \
                            --without-dbmalloc \
@@ -64,5 +64,5 @@ post_makeinstall_target() {
   cp misc/ncurses-config $TOOLCHAIN/bin
   chmod +x $TOOLCHAIN/bin/ncurses-config
   sed -e "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $TOOLCHAIN/bin/ncurses-config
-  #rm -rf $INSTALL/usr/bin
+  rm -rf $INSTALL/usr/bin
 }
