@@ -25,7 +25,7 @@ if [ -e "/flash/ee_fstype" ]; then
     ;;
     *)
         # Failsafe
-        ROM_FS_TYPE="vfat"
+        ROM_FS_TYPE="vfat -o codepage=950,iocharset=utf8 "
     ;;
     esac 
 fi
