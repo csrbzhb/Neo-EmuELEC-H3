@@ -11,7 +11,7 @@ export PULSE_RUNTIME_PATH=/run/pulse
 	echo "Set-Audio: Using audio device $RR_AUDIO_DEVICE"
     RR_PA_TSCHED="true"
     RR_AUDIO_VOLUME="100"
-    RR_AUDIO_BACKEND="PulseAudio"
+    RR_AUDIO_BACKEND="alsa"
     AUDIODEV="hw:$(get_ee_setting ee_audio_device)"
 	
 
@@ -19,6 +19,21 @@ pulseaudio_sink_load() {
 
   if [ ${RR_AUDIO_BACKEND} = "PulseAudio" ];then
   systemctl restart pulseaudio 
+
+	EE_DEVICE=$(cat /ee_arch)
+	if [ "$EE_DEVICE" == "H3" ]; then
+        pactl load-module module-alsa-sink device="dmixer" name="temp_sink" tsched=0 > /dev/null
+        pactl set-sink-volume alsa_output.temp_sink ${RR_AUDIO_VOLUME}%	
+        if [ ! -z "$(pactl list modules short | grep module-alsa-sink)" ];then
+          echo "Set-Audio: PulseAudio module-alsa-sink loaded, setting a volume of "${RR_AUDIO_VOLUME}"%"
+          echo "Set-Audio: PulseAudio will use sink "$(pactl list sinks short)
+        else
+          echo "Set-Audio: PulseAudio module-alsa-sink failed to load"
+        fi
+		
+	fi
+
+if [ "$EE_DEVICE" != "H3" ]; then
     if [ "${RR_PA_TSCHED}" = "false" ]; then
       TSCHED="tsched=0"
       echo "Set-Audio: PulseAudio will disable timer-based audio scheduling"
@@ -49,6 +64,7 @@ pulseaudio_sink_load() {
       fi
     fi
   fi
+fi
 }
 
 # Unload PulseAudio sink
