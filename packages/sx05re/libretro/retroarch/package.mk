@@ -63,15 +63,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-qt \
                            --enable-sdl2 \
                            --enable-ffmpeg"
 
-if [ "$DEVICE" == "OdroidGoAdvance" ] || [ "$DEVICE" == "GameForce" ] || [ "$DEVICE" == "RK356x" ]; then
-PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles3 \
-                           --enable-opengles3_2 \
-                           --enable-kms \
-                           --disable-mali_fbdev"
-else
 PKG_CONFIGURE_OPTS_TARGET+=" --disable-kms \
                            --enable-mali_fbdev"
-fi
 
 if [ "$DEVICE" == "OdroidGoAdvance" ]; then
 PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
