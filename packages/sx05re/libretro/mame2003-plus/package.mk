@@ -19,8 +19,8 @@
 ################################################################################
 
 PKG_NAME="mame2003-plus"
-PKG_VERSION="e5ee29ecb8182952f861f22516e5791625fe2671"
-PKG_SHA256="8d3bb9d07e54d09dd6eb9792b1ed2a200001d19f3ef6d3f1ca466c39ae6d328e"
+PKG_VERSION="de9f768db782cd67741ae109c124ffc5562816ad"
+#PKG_SHA256="8d3bb9d07e54d09dd6eb9792b1ed2a200001d19f3ef6d3f1ca466c39ae6d328e"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MAME"
@@ -37,7 +37,11 @@ PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
 make_target() {
-  make ARCH="" CC="$CC" NATIVE_CC="$CC" LD="$CC"
+  make ARCH="" CC="$CC" NATIVE_CC="$CC" LD="$CC" ARM=1 CPU_ARCH=arm
+  #make ARCH="" CC="$CC" NATIVE_CC="$CC" LD="$CC"
+  #make platform="rpi2"
+  #ARM           ?= 0 # set to 0 or 1 to indicate ARM or not
+  #CPU_ARCH
 }
 
 makeinstall_target() {
