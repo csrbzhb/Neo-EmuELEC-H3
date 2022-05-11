@@ -31,7 +31,9 @@ fi
 
 if [ "$EE_DEVICE" != "OdroidGoAdvance" ] && [ "$EE_DEVICE" != "GameForce" ]; then
     unset DISPLAY
-    MODE=`cat /sys/class/display/mode`;
+    
+    #MODE=`cat /sys/class/display/mode`;
+    MODE=$(get_ee_setting ee_videomode)
     sed -i '/device_video_modeline/d' $CONFIG_DIR/advmame.rc
 
     if [[ -f "/ee_s905" && "$MODE" == "1080p"* ]]; then
@@ -48,13 +50,13 @@ if [ "$EE_DEVICE" != "OdroidGoAdvance" ] && [ "$EE_DEVICE" != "GameForce" ]; the
         "1080p"*)
             echo "device_video_modeline 1920x1080_60.00 153.234 1920 1968 2121 2168 1080 1127 1130 1178 +hsync +vsync" >> $CONFIG_DIR/advmame.rc
         ;;
-        "1280x1024p60hz"*)
+        "1280x1024p60"*)
             echo "device_video_modeline 1280x1024_60.00 108.88 1280 1360 1496 1712 1024 1025 1028 1060 +hsync +vsync" >> $CONFIG_DIR/advmame.rc
         ;;
-        "1024x768p60hz"*)
+        "1024x768p60"*)
             echo "device_video_modeline 1024x768_60.00 64.11 1024 1080 1184 1344 768 769 772 795 +hsync +vsync" >> $CONFIG_DIR/advmame.rc
         ;;
-        "640x480p60hz"*)
+        "640x480p60"*)
             echo "device_video_modeline 640x480_60.00 23.86 640 656 720 800 480 481 484 497 +hsync +vsync" >> $CONFIG_DIR/advmame.rc
         ;;
     esac
