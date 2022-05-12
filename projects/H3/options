@@ -143,5 +143,5 @@
   # additional drivers
     ADDITIONAL_DRIVERS+=" "
 
-    ADDITIONAL_PACKAGES="emuelec gpio xbox360shutdown"
+    ADDITIONAL_PACKAGES="emuelec gpio xbox360shutdown flycast32"
     WIREGUARD_SUPPORT="no"
