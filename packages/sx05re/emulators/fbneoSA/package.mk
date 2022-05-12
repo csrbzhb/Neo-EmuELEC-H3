@@ -3,7 +3,7 @@
 
 PKG_NAME="fbneoSA"
 PKG_VERSION="dc45af4a26df9902140ee7172c802d6d4d828537"
-PKG_ARCH="aarch64"
+PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="https://github.com/finalburnneo/FBNeo"
 PKG_URL="${PKG_SITE}.git"
