@@ -7,7 +7,8 @@ CONFIGDIR="/emuelec/configs/mupen64plussa"
 
 get_resolution()
 {
-    local MODE=`cat /sys/class/display/mode`;
+    #local MODE=`cat /sys/class/display/mode`;
+    local MODE=`/usr/bin/cat /emuelec/configs/emuelec.conf | /usr/bin/grep ee_videomode |  /usr/bin/awk -F"=" '{ print $2 }'`;
     local H=480
 	local W=640
     
