@@ -25,11 +25,9 @@ if [[ "$TARGET_FPU" =~ "neon" ]]; then
 	PKG_MAKE_OPTS_TARGET+=" HAVE_NEON=1"
 fi
 
-if [ "$DEVICE" == "OdroidGoAdvance" ] || [ "$DEVICE" == "GameForce" ]; then
 	if [ "$ARCH" == "arm" ]; then
-	PKG_MAKE_OPTS_TARGET+=" platform=classic_armv8_a35"
+	PKG_MAKE_OPTS_TARGET+=" platform=classic_armv7_a7 "
 	fi
-fi
 
 }
 
