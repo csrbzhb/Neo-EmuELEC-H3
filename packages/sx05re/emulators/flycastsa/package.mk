@@ -1,60 +1,27 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2020-present Matthew Wang(https://github.com/asakous)
+# Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="flycastsa"
-PKG_VERSION="170ae3477c5b69975540aa382ac9ce3442d5c40e"
-PKG_ARCH="any"
-PKG_LICENSE="GPL3"
+PKG_VERSION="aa6c9e21063c929ccf651328547e5c6a9afd1f62"
+PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain SDL2-git SDL2_image"
-PKG_SHORTDESC="flycastsa."
-PKG_LONGDESC="flycastsa."
-PKG_TOOLCHAIN="make"
-GET_HANDLER_SUPPORT="git"
+PKG_DEPENDS_TARGET="toolchain $OPENGLES alsa SDL2 libzip zip"
+PKG_LONGDESC="Flycast is a multiplatform Sega Dreamcast, Naomi and Atomiswave emulator"
+PKG_TOOLCHAIN="cmake"
+PKG_GIT_CLONE_BRANCH="master"
 
-PKG_BUILD_FLAGS="-gold"
 
 pre_configure_target() {
-# Flycast defaults to -O3 but then CHD v5 do not seem to work on EmuELEC so we change it to -O2 to fix the issue
-PKG_MAKE_OPTS_TARGET="ARCH=${ARCH} HAVE_OPENMP=1 GIT_VERSION=${PKG_VERSION:0:7} FORCE_GLES=1 SET_OPTIM=-O2 HAVE_LTCG=0"
+export CXXFLAGS="${CXXFLAGS} -Wno-error=array-bounds"
+PKG_CMAKE_OPTS_TARGET+="-DUSE_GLES=ON -DUSE_VULKAN=OFF -DUSE_HOST_LIBZIP=OFF"
 }
-
-pre_make_target() {
-   case $PROJECT in
-    Amlogic-ng)
-      PKG_MAKE_OPTS_TARGET+=" platform=AMLG12B"
-      ;;
-    Amlogic)
-      PKG_MAKE_OPTS_TARGET+=" platform=AMLGX"
-    ;; 
-    H3)
-      PKG_MAKE_OPTS_TARGET+=" platform=odroid"
-
-    ;;   
-  esac
-  
- if [ "$DEVICE" == "OdroidGoAdvance" ]; then
-	PKG_MAKE_OPTS_TARGET+=" platform=classic_armv8_a35"
- fi 
-}
-
-make_target() {
-  export SYSROOT_PREFIX=${SYSROOT_PREFIX}	
-  export CFLAGS="$CFLAGS -DEGL_NO_X11"
-  export CXXFLAGS="$CXXFLAGS -DEGL_NO_X11"
-  cd $PKG_BUILD/shell/linux
-  make CC=$CC CXX=$CXX AS=$CC STRIP=$STRIP  platform=odroid reicast.elf
-}
-
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
-  cp reicast.elf $INSTALL/usr/bin/flycastsa
-  cp tools/reicast-joyconfig.py $INSTALL/usr/bin/flycast-joyconfig.py
-  mkdir -p $INSTALL/usr/config/emuelec/bin
-  cp -r $PKG_DIR/config/* $INSTALL/usr/config/
-  cp -r $PKG_DIR/scripts/* $INSTALL/usr/config/emuelec/bin/
+  cp $PKG_BUILD/.${TARGET_NAME}/flycast $INSTALL/usr/bin/flycast
+  cp $PKG_DIR/scripts/* $INSTALL/usr/bin
+
+	chmod +x $INSTALL/usr/bin/flycast.sh
+	chmod +x $INSTALL/usr/bin/set_flycast_joy.sh
 }
-
-

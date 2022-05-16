@@ -40,7 +40,7 @@ case "${1}" in
 *)
 # Any commands that you want to run after the frontend has started goes here
     /usr/sbin/ntpd -n -N -p tick.stdtime.gov.tw >/dev/null  2>&1  &
-    GPIO_STATIS=`cat /storage/.config/gpio/service.flag`
+    GPIO_STATIS=`cat /flash/service.flag`
     if [[ $GPIO_STATIS == 1 ]]
 	then
   	systemctl start gpio

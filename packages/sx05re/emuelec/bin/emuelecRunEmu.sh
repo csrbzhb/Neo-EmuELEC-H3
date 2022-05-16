@@ -79,7 +79,8 @@ BASEROMNAME=${ROMNAME##*/}
 GAMEFOLDER="${ROMNAME//${BASEROMNAME}}"
 
 [ -f "/emuelec/bin/setres.sh" ] && SET_DISPLAY_SH="/emuelec/bin/setres.sh" || SET_DISPLAY_SH="/usr/bin/setres.sh"
-VIDEO="$(cat /sys/class/display/mode)"
+#VIDEO="$(cat /sys/class/display/mode)"
+VIDEO=`/usr/bin/cat /emuelec/configs/emuelec.conf | /usr/bin/grep ee_videomode |  /usr/bin/awk -F"=" '{ print $2 }'`;
 VIDEO_EMU=$(get_ee_setting nativevideo "${PLATFORM}" "${BASEROMNAME}")
 
 if [[ "${CORE}" == *"_32b"* ]]; then
@@ -105,7 +106,7 @@ if [[ "${EMULATOR}" = "retrorun" ]]; then
 fi
 
 # freej2me needs the JDK to be downloaded on the first run
-if [ ${EMU} == "freej2me_libretro" ]; then
+if [[ ${EMU} == "freej2me_libretro" ]]; then
 freej2me.sh
 
 JAVA_HOME='/storage/roms/bios/jdk'

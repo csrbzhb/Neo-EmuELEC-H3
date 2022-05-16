@@ -91,7 +91,7 @@
 		<image>./downloaded_images/last.png</image>
 	</game>
 	<game>
-		<path>./launch_terminal_(kb).sh</path>
+		<path>./launch_terminal.sh</path>
 		<name>Launch Terminal</name>
 		<desc>Start a terminal, a keybord is required!</desc>
 		<developer>shantigilbert </developer>

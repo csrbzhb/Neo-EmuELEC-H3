@@ -33,8 +33,8 @@ blank_buffer()
   # Blank the buffer.
   dd if=/dev/zero of=/dev/fb0 bs=12M > /dev/null 2>&1
 }
-
-exit 1
+# H3
+exit 0
 
 BPP=32
 HZ=60

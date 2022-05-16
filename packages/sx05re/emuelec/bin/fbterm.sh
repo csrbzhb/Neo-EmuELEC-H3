@@ -9,7 +9,7 @@ EE_DEVICE=$(cat /ee_arch)
 
 ee_console enable
 
-if [[ "${1}" == *"launch_terminal_(kb).sh"* ]]; then
+if [[ "${1}" == *"launch_terminal.sh"* ]]; then
         ee_console disable
     if [ "$EE_DEVICE" == "OdroidGoAdvance" ] || [ "$EE_DEVICE" == "GameForce" ]; then
         #kmscon
