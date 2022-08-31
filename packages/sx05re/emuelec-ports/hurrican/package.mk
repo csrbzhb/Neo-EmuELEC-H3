@@ -8,12 +8,12 @@ PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/drfiemost/Hurrican"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain SDL2 SDL2_mixer libepoxy"
+PKG_DEPENDS_TARGET="toolchain SDL2-git SDL2_mixer libepoxy"
 PKG_LONGDESC="A fork of Hurrican, freeware jump and shoot game created by Poke53280, with SDL2 enabled by default, support for libopenmpt and CRT simulation "
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="cmake"
 
-PKG_CMAKE_OPTS_TARGET=" ./Hurrican -DCMAKE_BUILD_TYPE=Release -DUSE_GLES2=1"
+PKG_CMAKE_OPTS_TARGET=" ./Hurrican -DCMAKE_BUILD_TYPE=Release -DRENDERER=GLES2"
 
 if [ "${DEVICE}" == "OdroidGoAdvance" ] || [ "${DEVICE}" == "GameForce" ]; then
 	PKG_CMAKE_OPTS_TARGET+=" -DDEFAULT_SCREENBPP=16"
@@ -22,6 +22,7 @@ fi
 pre_configure_target() {
   export EGL_LIBS=$SYSROOT_PREFIX/usr/lib
   export EGL_CFLAGS=-fpic
+
   git submodule update --init --recursive
 }
 

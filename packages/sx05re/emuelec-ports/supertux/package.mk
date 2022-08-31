@@ -2,13 +2,13 @@
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="supertux"
-PKG_VERSION="ebc2053150ee3cd69a38a257d5ba31059832d19a"
+PKG_VERSION="9a6a0599a66cc9f682a454a18a6543181f20b703" #v0.6.3
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/SuperTux/supertux"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain SDL2-git boost"
+PKG_DEPENDS_TARGET="toolchain SDL2-git boost glm"
 PKG_LONGDESC="Run and jump through multiple worlds, fighting off enemies by jumping on them, bumping them from below or tossing objects at them, grabbing power-ups and other stuff on the way."
 GET_HANDLER_SUPPORT="git"
 pre_configure_target() {

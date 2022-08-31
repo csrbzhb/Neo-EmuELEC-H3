@@ -8,7 +8,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE=""
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain Jinja2:host pyyaml pyyaml:host"
+PKG_DEPENDS_TARGET="toolchain jinja2:host pyyaml pyyaml:host"
 PKG_SECTION="emuelec"
 PKG_SHORTDESC="EmuELEC Ports Meta Package"
 PKG_TOOLCHAIN="manual"
@@ -32,13 +32,17 @@ PKG_DEPENDS_TARGET+=" commander-genius \
                 lzdoom \
                 supermariowar \
                 bstone \
+                hurrican \
                 cdogs-sdl \
-                fheroes2"
+                abuse \
+                fheroes2 \
+                augustus \
+                xash3d \
+                sonicmania \
+                openjazz"
 
 amlogicports=""
 hhports=" openjazz"
-#                hurrican \ abuse \
-
 
 if [ "${DEVICE}" == "Amlogic"* ]; then
 	PKG_DEPENDS_TARGET+="${amlogicports}"

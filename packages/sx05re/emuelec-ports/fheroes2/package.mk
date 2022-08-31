@@ -2,14 +2,14 @@
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="fheroes2"
-PKG_VERSION="92145f74770ab8b5320047426cb7b990700f71f3"
+PKG_VERSION="eab9bde925a1d6435e436ce944cfe251a0f66a13"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/ihhub/fheroes2"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain SDL2"
+PKG_DEPENDS_TARGET="toolchain SDL2-git"
 PKG_SHORTDESC="Free Heroes of Might and Magic II (fheroes2) is a recreation of HoMM2 game engine."
 PKG_TOOLCHAIN="cmake"
-
+GET_HANDLER_SUPPORT="git"
 PKG_CMAKE_OPTS_TARGET=" -DENABLE_RELEASE=ON -DUSE_SDL_VERSION=SDL2 -DENABLE_IMAGE=ON -DCMAKE_BUILD_TYPE=Release"
 
 makeinstall_target() {

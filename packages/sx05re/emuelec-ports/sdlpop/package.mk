@@ -2,14 +2,14 @@
 # Copyright (C) 2020-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="sdlpop"
-PKG_VERSION="baa1fba8841e834873de55e4435f1a7e21a73c1d"
-PKG_SHA256="4155307305da57512ff213c2740276d7a601d1c571172c949742e9b55158c7f6"
+PKG_VERSION="4c560a400ab9f23a3151996ef818320616ec12cc"
+PKG_SHA256="9a66caa531714359d01cbe98c60e85f03bd7b10ad7685d630a4d351cc5727e50"
 PKG_ARCH="any"
 PKG_LICENSE="GPL3"
 PKG_SITE="https://github.com/NagyD/SDLPoP"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain SDL2 SDL2_image"
-PKG_SHORTDESC="Prince of Persia SDL"
+PKG_DEPENDS_TARGET="toolchain SDL2-git SDL2_image"
+PKG_SHORTDESC="Prince of Persia SDL2-git"
 PKG_LONGDESC="An open-source port of Prince of Persia, based on the disassembly of the DOS version."
 PKG_TOOLCHAIN="make"
 

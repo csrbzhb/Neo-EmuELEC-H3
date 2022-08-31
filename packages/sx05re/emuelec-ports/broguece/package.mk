@@ -2,13 +2,13 @@
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="broguece"
-PKG_VERSION="b209ecde1b512fce31e23485abe3faec668a14ef"
+PKG_VERSION="31ced99b16981ca1b5d5f47ecbd15b26a27b0217"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="AGPL3"
 PKG_SITE="https://github.com/tmewett/BrogueCE"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain SDL2 SDL2_image"
+PKG_DEPENDS_TARGET="toolchain SDL2-git SDL2_image"
 PKG_LONGDESC="Brogue: Community Edition - a community-lead fork of the much-loved minimalist roguelike game"
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="make"
