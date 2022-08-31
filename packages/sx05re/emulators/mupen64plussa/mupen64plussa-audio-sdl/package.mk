@@ -20,7 +20,7 @@ make_target() {
   export USE_GLES=1
   export NEON=1
   export VFP_HARD=1
-  export APIDIR=/home/matthew/Neo-EmuELEC-H3/build.EmuELEC-H3.arm-4.0/mupen64plussa-core-57828d930280554c7400bb2bcf1e46c7f2ee8373/.install_pkg/usr/local/include/mupen64plus
+  export APIDIR=$(get_install_dir mupen64plussa-core)/usr/local/include/mupen64plus
   export USE_GLES=1
   export SDL_CFLAGS="-I$SYSROOT_PREFIX/usr/include/SDL2 -D_REENTRANT"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
