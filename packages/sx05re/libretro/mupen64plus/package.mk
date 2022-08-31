@@ -59,13 +59,9 @@ pre_configure_target() {
     ;;
   esac
  
- if [ "$DEVICE" == "OdroidGoAdvance" ] || [ "$DEVICE" == "GameForce" ]; then 
-	if [[ "$ARCH" == "arm" ]]; then
+
 		PKG_MAKE_OPTS_TARGET=" platform=unix GLES=1 FORCE_GLES=1 HAVE_NEON=1 WITH_DYNAREC=arm"
-	else 
-		PKG_MAKE_OPTS_TARGET=" platform=unix GLES=1 FORCE_GLES=1 HAVE_NEON=0 WITH_DYNAREC=aarch64"
-	fi
- fi
+
   
 }
 
