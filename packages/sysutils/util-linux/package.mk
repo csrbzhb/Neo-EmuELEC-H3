@@ -101,3 +101,9 @@ post_install () {
     enable_service swap.service
   fi
 }
+
+make_target() {
+    make  LDFLAGS="$LDFLAGS -ltinfo"
+
+  
+}
