@@ -60,3 +60,5 @@ packages/sx05re/ports/zandronum/*
 packages/sx05re/ports/zmusic/*
 packages/sx05re/tools/video/glu2/*
 packages/sx05re/emuelec-emulationstation/api_keys.txt
+4.5/*
+new_gcc9/*

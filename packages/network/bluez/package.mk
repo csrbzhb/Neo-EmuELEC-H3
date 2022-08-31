@@ -41,7 +41,8 @@ pre_configure_target() {
   cd $PKG_BUILD
     rm -rf .$TARGET_NAME
 
-  export LIBS="-lncurses"
+export LIBS=" -lncurses -lreadline -ltinfo"
+
 }
 
 post_makeinstall_target() {
