@@ -10,6 +10,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="EmuELEC tools metapackage"
 PKG_SECTION="virtual"
 
-PKG_DEPENDS_TARGET+=" zc210-libretro wpa_supplicant "
+PKG_DEPENDS_TARGET+=" zc210-libretro wpa_supplicant gobject-introspection dbus-python3"
 
 

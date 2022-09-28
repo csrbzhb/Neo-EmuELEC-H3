@@ -19,7 +19,7 @@ pre_make_target() {
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python3 setup.py install --root=$INSTALL --prefix=/usr
   mkdir -p $INSTALL/usr/config/
   cp -rf $PKG_DIR/config/* $INSTALL/usr/config/
 }

@@ -21,9 +21,9 @@ pre_configure_target() {
 }
 
 make_target() {
-  python setup.py build
+  python3 setup.py build
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python3 setup.py install --root=$INSTALL --prefix=/usr
 }

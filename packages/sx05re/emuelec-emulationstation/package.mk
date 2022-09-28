@@ -60,6 +60,7 @@ pre_make_target() {
 }
 
 makeinstall_target() {
+	PKG_PYTHON_VERSION="python3.7"
 	mkdir -p ${INSTALL}/usr/config/emuelec/configs/locale/i18n/charmaps
 	cp -rf $PKG_BUILD/locale/lang/* ${INSTALL}/usr/config/emuelec/configs/locale/
 	cp -PR "$(get_build_dir glibc)/localedata/charmaps/UTF-8" ${INSTALL}/usr/config/emuelec/configs/locale/i18n/charmaps/UTF-8

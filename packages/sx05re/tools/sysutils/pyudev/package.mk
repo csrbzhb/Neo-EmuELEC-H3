@@ -18,11 +18,11 @@ pre_make_target() {
 }
 
 make_target() {
-  python setup.py build --cross-compile
+  python3 setup.py build
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python3 setup.py install --root=$INSTALL --prefix=/usr
 }
 
 post_makeinstall_target() {

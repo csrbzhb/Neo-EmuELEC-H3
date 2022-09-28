@@ -72,7 +72,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --disable-pydoc
                            --disable-test-modules
                            --disable-lib2to3
-                           --disable-idle3
+                           --enable-idle3
                            --without-cxx-main
                            --with-expat=system
                            --with-libmpdec=none
@@ -116,10 +116,15 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/python*-config
   rm -rf $INSTALL/usr/bin/smtpd.py $INSTALL/usr/bin/smtpd.py.*
 
+	
   $TOOLCHAIN/bin/python3 -Wi -t -B $TOOLCHAIN/lib/$PKG_PYTHON_VERSION/compileall.py -d ${PKG_INSTALL_PATH_LIB#${INSTALL}} -b -f $PKG_INSTALL_PATH_LIB
   find $PKG_INSTALL_PATH_LIB -name "*.py" -exec rm -f {} \; &>/dev/null
 
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
   debug_strip $INSTALL/usr
+  #fix me
+  cd $INSTALL/usr/bin/
+  ln -sf python3.7 python
+  
 }

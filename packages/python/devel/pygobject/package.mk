@@ -1,26 +1,41 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="pygobject"
-PKG_VERSION="2.28.7"
-PKG_SHA256="bb9d25a3442ca7511385a7c01b057492095c263784ef31231ffe589d83a96a5a"
+PKG_VERSION="3.28.3"
+PKG_SHA256="3dd3e21015d06e00482ea665fc1733b77e754a6ab656a5db5d7f7bfaf31ad0b0"
+PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.pygtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.28/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain Python2 glib libffi"
+PKG_URL="https://download.gnome.org/sources/pygobject/3.28/pygobject-3.28.3.tar.xz"
+PKG_DEPENDS_TARGET="toolchain Python3 glib libffi gobject-introspection pgi"
 PKG_LONGDESC="A convenient wrapper for the GObject+ library for use in Python programs."
 PKG_TOOLCHAIN="autotools"
+PKG_IS_ADDON="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-thread --disable-introspection"
+PKG_CONFIGURE_OPTS_TARGET="--disable-cairo \
+                           --enable-shared \
+                           --with-python=${TOOLCHAIN}/bin/python3.7"
 
 pre_configure_target() {
-  export PYTHON_INCLUDES="$($SYSROOT_PREFIX/usr/bin/python2-config --includes)"
+  export PYTHON_INCLUDES="$(${SYSROOT_PREFIX}/usr/bin/python3-config --includes)"
+}
+
+post_unpack() {
+  sed -i "s|@CODE_COVERAGE_RULES@||" ${PKG_BUILD}/Makefile.am
+
+  # https://docs.python.org/3/whatsnew/3.9.html
+  #   the tp_print slot of PyTypeObject has been removed
+  sed -i "s|                              offsetof(PyTypeObject, tp_print) ||" ${PKG_BUILD}/gi/pygobject-object.c
 }
 
 post_makeinstall_target() {
-  find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
-  find $INSTALL/usr/lib -name "*.pyc" -exec rm -rf "{}" ";"
+  #python_remove_source
 
-  rm -rf $INSTALL/usr/bin
-  rm -rf $INSTALL/usr/share/pygobject
+  rm -rf ${INSTALL}/usr/bin
+  rm -rf ${INSTALL}/usr/share/pygobject
+  #fix me
+  cd ${INSTALL}/usr/lib/python3.7/site-packages/gi/
+  ln -sf _gi.cpython-37-x86_64-linux-gnu.so _gi.so 
 }

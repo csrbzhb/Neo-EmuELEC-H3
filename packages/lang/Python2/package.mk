@@ -114,6 +114,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/pydoc
   rm -rf $INSTALL/usr/bin/smtpd.py
   rm -rf $INSTALL/usr/bin/python*-config
+  
+  rm -f $INSTALL/usr/bin/python
 
   cd $INSTALL/usr/lib/$PKG_PYTHON_VERSION
   $TOOLCHAIN/bin/python -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/$PKG_PYTHON_VERSION -f .
