@@ -9,7 +9,9 @@ ee_console enable
 echo "Checking JDK..." > /dev/console
 
 JDKDEST="${HOME}/roms/bios/jdk"
-JDKNAME="zulu18.0.45-ea-jdk18.0.0-ea.18"
+#JDKNAME="zulu18.0.45-ea-jdk18.0.0-ea.18"
+JDKNAME="zulu8.48.3.246-ca-jdk8.0.265"
+
 CDN="https://cdn.azul.com/zulu/bin"
 
 # Alternate just for reference
@@ -33,14 +35,14 @@ if [ $? -ne 0 ]; then
 fi
     echo "Downloading JDK please be patient..." > /dev/console
     cd ${JDKDEST}/..
-    wget "${CDN}/${JDKNAME}-linux_aarch64.tar.gz" > /dev/console 2>&1
+    wget "${CDN}/${JDKNAME}-linux_aarch32hf.tar.gz" > /dev/console 2>&1
     echo "Inflating JDK please be patient..." > /dev/console
-    tar xvfz ${JDKNAME}-linux_aarch64.tar.gz ${JDKNAME}-linux_aarch64/lib > /dev/console 2>&1
-    tar xvfz ${JDKNAME}-linux_aarch64.tar.gz ${JDKNAME}-linux_aarch64/bin > /dev/console 2>&1
-    tar xvfz ${JDKNAME}-linux_aarch64.tar.gz ${JDKNAME}-linux_aarch64/conf > /dev/console 2>&1
-    rm ${JDKNAME}-linux_aarch64/lib/*.zip
-    mv ${JDKNAME}-linux_aarch64/* ${JDKDEST}
-    rm -rf ${JDKNAME}-linux_aarch64*
+    tar xvfz ${JDKNAME}-linux_aarch32hf.tar.gz ${JDKNAME}-linux_aarch32hf/lib > /dev/console 2>&1
+    tar xvfz ${JDKNAME}-linux_aarch32hf.tar.gz ${JDKNAME}-linux_aarch32hf/bin > /dev/console 2>&1
+    tar xvfz ${JDKNAME}-linux_aarch32hf.tar.gz ${JDKNAME}-linux_aarch32hf/jre > /dev/console 2>&1
+    rm ${JDKNAME}-linux_aarch32hf/lib/*.zip
+    mv ${JDKNAME}-linux_aarch32hf/* ${JDKDEST}
+    rm -rf ${JDKNAME}-linux_aarch32hf*
     
     for del in jmods include demo legal man DISCLAIMER LICENSE readme.txt release Welcome.html; do
         rm -rf ${JDKDEST}/${del}
