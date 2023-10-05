@@ -58,6 +58,7 @@ pre_configure_target(){
                          -DVIDEO_MALI=ON \
                          -DVIDEO_VULKAN=OFF \
                          -DVIDEO_KMSDRM=OFF \
+						 -DHAVE_STROPTS_H=0 \
                          -DPULSEAUDIO=ON"
 }
 

@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="flycast"
-PKG_VERSION="aa6c9e21063c929ccf651328547e5c6a9afd1f62"
+PKG_VERSION="cb91ad3ae0c1291485892bf3a9663a2fd303ce83"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/flyinghead/flycast"
@@ -32,6 +32,7 @@ PKG_TOOLCHAIN="cmake"
 PKG_CMAKE_OPTS_TARGET="-DLIBRETRO=ON \
                         -DUSE_OPENMP=OFF \ 
                         -DCMAKE_BUILD_TYPE=Release \
+						-DUSE_HOST_LIBZIP=ON \						
                         -DUSE_GLES2=ON"
 
 pre_make_target() {

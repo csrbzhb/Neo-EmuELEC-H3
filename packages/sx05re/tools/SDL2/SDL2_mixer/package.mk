@@ -21,3 +21,26 @@ pre_configure_target() {
 							 --enable-music-ogg \
 							 --enable-music-mp3"
 }
+
+
+pre_configure_host() {
+
+  PKG_CONFIGURE_OPTS_HOST=" --prefix=${TOOLCHAIN} \
+							--disable-sdltest \
+							 --disable-music-midi-fluidsynth \
+							 --enable-music-flac \
+							 --enable-music-mod-modplug \
+							 --enable-music-ogg-tremor \
+							 --enable-music-ogg \
+							 --enable-music-mp3"
+}
+
+
+# makeinstall_host() {
+# : #no 
+# }
+
+makeinstall_host() {
+  make install PREFIX="${TOOLCHAIN}"
+  make install PREFIX="${TOOLCHAIN}"
+}

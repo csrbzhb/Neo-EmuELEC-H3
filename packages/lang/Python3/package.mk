@@ -101,6 +101,8 @@ post_makeinstall_host() {
   rm -fr $PKG_BUILD/.$HOST_NAME/build/temp.*
 
   cp $PKG_BUILD/Tools/scripts/reindent.py $TOOLCHAIN/lib/$PKG_PYTHON_VERSION
+  cp $PKG_BUILD/.$HOST_NAME/python-config $TOOLCHAIN/bin/$PKG_PYTHON_VERSION-config
+  chmod 755 $TOOLCHAIN/bin/$PKG_PYTHON_VERSION-config
 }
 
 post_makeinstall_target() {

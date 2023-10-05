@@ -24,7 +24,7 @@ PKG_CONFIGURE_OPTS_TARGET="vim_cv_getcwd_broken=no \
                            --enable-gui=no \
                            --with-compiledby=LibreELEC \
                            --with-features=huge \
-                           --with-tlib=ncurses \
+                           --with-tlib=tinfo \
                            --without-x"
 
 pre_configure_target() {

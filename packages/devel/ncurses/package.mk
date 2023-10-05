@@ -21,11 +21,11 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --without-manpages \
                            --without-progs \
                            --without-tests \
-                           --without-shared \
+                           --with-shared \
                            --with-normal \
                            --without-debug \
                            --without-profile \
-                           --without-termlib \
+                           --with-termlib \
                            --without-ticlib \
                            --without-gpm \
                            --without-dbmalloc \
@@ -62,6 +62,7 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
 
 PKG_CONFIGURE_OPTS_HOST="--enable-termcap \
                          --with-termlib \
+			 --with-shared \
                          --enable-pc-files \
                          --without-manpages"
 
