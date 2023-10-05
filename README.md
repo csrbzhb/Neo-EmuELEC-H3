@@ -6,6 +6,14 @@ build command
 
 PROJECT=H3 ARCH=arm DISTRO=EmuELEC UBOOT_SYSTEM=opipc make -j4 image 
 
+note 
+some packages are needed for host machine. 
+although these packages already added to the program and it should automatically install when you first time run build command.
+since new script hasn't been tested.
+in case someone run into compile problems. 
+please manual install these packages by this command.
+sudo apt install texinfo libtinfo-dev device-tree-compiler gcc-multilib
+
 
 Base on
 =======
