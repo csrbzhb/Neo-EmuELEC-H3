@@ -1,6 +1,9 @@
 # Retro emulation for Allwinner H3 devices.
 
+My development environment is ubuntu 20.04. Don't use others distro. it may cause compile problems.
+
 build command
+
 PROJECT=H3 ARCH=arm DISTRO=EmuELEC UBOOT_SYSTEM=opipc make -j4 image 
 
 
