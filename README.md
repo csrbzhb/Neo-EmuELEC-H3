@@ -1,8 +1,15 @@
 # Retro emulation for Allwinner H3 devices.
 
+build command
+PROJECT=H3 ARCH=arm DISTRO=EmuELEC UBOOT_SYSTEM=opipc make -j4 image 
+
+
 Base on
 =======
 # EmuELEC is now ~~aarch64~~ ONLY, compiling and using the ARM version (after 3.9) is no longer supported, please check out the master_32bit branch if you wish to build the 32bit version.
+
+
+
 
 # EmuELEC  
 Retro emulation for Amlogic devices.  
