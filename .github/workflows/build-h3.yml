@@ -40,7 +40,7 @@ jobs:
       id: compile
       run: |
         echo "PRJ_PATH=$PWD" >> $GITHUB_ENV
-        PROJECT=H3 ARCH=arm DISTRO=EmuELEC make -j4 image
+        PROJECT=H3 ARCH=arm DISTRO=EmuELEC make -j4 pkg-down
         echo "DATE=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
 
