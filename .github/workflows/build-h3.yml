@@ -35,11 +35,6 @@ jobs:
         echo -e "$(sudo lshw -short -C memory | grep GiB) \n"
         echo "--------------------------硬盘信息--------------------------"
         echo "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
-    - name: change work
-      run: |
-        cd ..
-        cp Neo-EmuELEC-H3 /mnt/ -rf
-        cd /mnt/Neo-EmuELEC-H3
 
     - name: start compile make
       id: compile
