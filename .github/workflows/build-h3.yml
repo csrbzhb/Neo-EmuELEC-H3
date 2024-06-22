@@ -18,6 +18,6 @@ jobs:
 
     - name: start make
       run: |
-        cd Neo-EmuELEC-H3
+        pwd
         PROJECT=H3 ARCH=arm DISTRO=EmuELEC make -j4 image
 
